@@ -3,8 +3,6 @@
 
 Adds enemies that were cut during development, and remixes it to be more fitting to the rest of the pack. Also adds a few more family events.
 
-* Sneaky rebalance: Larvas have double damage but will now explode on first leap attack, Configurable.
-
 ## Cut Enemies
 * Adds **Iota Construct**, a boss construct monster.
 ![Image](https://media.discordapp.net/attachments/515678821408571392/1082908308131819551/20230308150726_1.jpg)
@@ -25,7 +23,7 @@ Adds enemies that were cut during development, and remixes it to be more fitting
   * This does not mean itself does not pack a punch however, as its *projectiles* are as deadly as its younger sibling.
   * The powerful *ground slam* is enough to put you in low health in just one shot! Make sure to get off the ground when it raises its base and prepares its attack.
 
-* Ability to spawn Elite variants of Magma Worm and Overloading Worm.
+* Ability to spawn Elite variants of Magma Worm, Overloading Worm, Alloy Worship Unit, Aurellionite, Artifact Reliquary and [Direseeker](https://thunderstore.io/package/EnforcerGang/Direseeker/).
 ![Image](https://media.discordapp.net/attachments/515678821408571392/1082919853695967314/20230308155635_1.jpg)
 
 ### Configurability
@@ -42,6 +40,7 @@ Every value is defaulted to what the original value was, unless stated otherwise
 * Minimum Stage Required before Spawn (for loops)
 
 ## Family Event
+* Configurable Family Event chance. (Default: 2%)
 * Removes Acid Larva family event. (Configurable)
 * Adds Iota and [Sigma Construct](https://thunderstore.io/package/SpikestripModding/Spikestrip2_0) to the Construct Family.
 * Adds [Coil Golem](https://thunderstore.io/package/PlasmaCore3/Forgotten_Relics) to the Golem Family.
@@ -50,11 +49,29 @@ Every value is defaulted to what the original value was, unless stated otherwise
 * New **Solus Family**: Alloy Vulture, Solus Probe, Solus Control Unit
 * New **Blind Family**: Blind Vermin, Blind Pest, Magma Worm, Overloading Worm
 * New **Bell Family**: Brass Contraption, [Bell Tower](https://thunderstore.io/package/PlasmaCore3/Forgotten_Relics) (only added if Bell Tower is enabled)
+* Adds **Parent Family** (cut content).
 * Construct Family Event is now also possible at Sky Meadow, [Fogbound Lagoon](https://thunderstore.io/package/JaceDaDorito/FogboundLagoon), [Forgotten Haven](https://thunderstore.io/package/PlasmaCore3/Forgotten_Relics), and Titanic Plains.
+* Lemurian Family Event is now also possible at [Dry Basin](https://thunderstore.io/package/PlasmaCore3/Forgotten_Relics).
 * Golem Family Event is now also possible at [Fogbound Lagoon](https://thunderstore.io/package/JaceDaDorito/FogboundLagoon), and [Forgotten Haven](https://thunderstore.io/package/PlasmaCore3/Forgotten_Relics).
+* Gup Family Event can now also spawn Geeps and Gips.
 * Family Events can now happen at Gilded Coast as well.
 
+## Sneaky Rebalances
+
+* Larvas have double damage but will now explode on first leap attack, Configurable.
+* Artifact Reliquary deal double damage.
+* Alloy Worship Unit's Invulnerability time reduced. Default: 6 seconds.
+* Direseeker will now drop items on its death position.
+
+## Compatibility
+- Make sure to turn off `2b - Family Events > Add extra Family Events` from [LittleGameplayTweaks](https://thunderstore.io/package/Wolfo/LittleGameplayTweaks/) (or this mod's family event settings) as it does the same(ish) thing.
+
 ## Credits
-* **FORCED_ASSEMBLY** for idea and name(kinda)
+* **FORCED_REASSEMBLY** for idea and name(kinda)
 * **PlasmaCore3** for [Forgotten Relics](https://thunderstore.io/package/PlasmaCore3/Forgotten_Relics), where Bell Tower's sprite and functionality was used in this mod/icon of this mod.
 * **Anreol** for [Released from the Void](https://thunderstore.io/package/Anreol/ReleasedFromTheVoid), where the name for Iota Construct came from. If you want a different flavor of Iota Construct / Assassin that is more closer to how it was intended, check it out.
+
+## Changelog
+- 1.0.2: Special boss elites, awu/direseeker tweaks
+- 1.0.1: Gup family, Lemurian family, Parent family tweaks, family event chance config
+- 1.0.0: Initial Release

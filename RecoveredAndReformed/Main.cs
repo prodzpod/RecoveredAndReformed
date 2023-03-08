@@ -29,12 +29,13 @@ namespace RecoveredAndReformed
     [BepInDependency("com.Moffein.AncientWisp", BepInDependency.DependencyFlags.SoftDependency)]
     [BepInDependency("com.Moffein.AccurateEnemies", BepInDependency.DependencyFlags.SoftDependency)]
     [BepInDependency("PlasmaCore.ForgottenRelics", BepInDependency.DependencyFlags.SoftDependency)]
+    [BepInDependency("com.rob.Direseeker", BepInDependency.DependencyFlags.SoftDependency)]
     public class Main : BaseUnityPlugin
     {
         public const string PluginGUID = PluginAuthor + "." + PluginName;
         public const string PluginAuthor = "prodzpod";
         public const string PluginName = "RecoveredAndReformed";
-        public const string PluginVersion = "1.0.0";
+        public const string PluginVersion = "1.0.2";
         public static ManualLogSource Log;
         public static PluginInfo pluginInfo;
         public static Harmony Harmony;
@@ -47,6 +48,10 @@ namespace RecoveredAndReformed
         public static ConfigEntry<int> BellTowerMinStage;
         public static ConfigEntry<bool> EliteMagmaWorm;
         public static ConfigEntry<bool> EliteOverloadingWorm;
+        public static ConfigEntry<bool> EliteAWU;
+        public static ConfigEntry<bool> EliteAurellionite;
+        private ConfigEntry<bool> EliteArtifactShell;
+        public static ConfigEntry<bool> EliteDireseeker;
         public static ConfigEntry<float> MajorConstructHealth;
         public static ConfigEntry<float> MajorConstructHealthStack;
         public static ConfigEntry<float> MajorConstructDamage;
@@ -93,6 +98,33 @@ namespace RecoveredAndReformed
         public static ConfigEntry<float> AcidLarvaSpeed;
         public static ConfigEntry<float> AcidLarvaArmor;
         public static ConfigEntry<int> AcidLarvaCost;
+        public static ConfigEntry<float> AWUHealth;
+        public static ConfigEntry<float> AWUHealthStack;
+        public static ConfigEntry<float> AWUDamage;
+        public static ConfigEntry<float> AWUDamageStack;
+        public static ConfigEntry<float> AWUAttackSpeed;
+        public static ConfigEntry<float> AWUSpeed;
+        public static ConfigEntry<float> AWUArmor;
+        public static ConfigEntry<float> AurellioniteHealth;
+        public static ConfigEntry<float> AurellioniteHealthStack;
+        public static ConfigEntry<float> AurellioniteDamage;
+        public static ConfigEntry<float> AurellioniteDamageStack;
+        public static ConfigEntry<float> AurellioniteAttackSpeed;
+        public static ConfigEntry<float> AurellioniteSpeed;
+        public static ConfigEntry<float> AurellioniteArmor;
+        public static ConfigEntry<float> ArtifactShellHealth;
+        public static ConfigEntry<float> ArtifactShellHealthStack;
+        public static ConfigEntry<float> ArtifactShellDamage;
+        public static ConfigEntry<float> ArtifactShellDamageStack;
+        public static ConfigEntry<float> ArtifactShellAttackSpeed;
+        public static ConfigEntry<float> ArtifactShellArmor;
+        public static ConfigEntry<float> DireseekerHealth;
+        public static ConfigEntry<float> DireseekerHealthStack;
+        public static ConfigEntry<float> DireseekerDamage;
+        public static ConfigEntry<float> DireseekerDamageStack;
+        public static ConfigEntry<float> DireseekerAttackSpeed;
+        public static ConfigEntry<float> DireseekerSpeed;
+        public static ConfigEntry<float> DireseekerArmor;
         public static ConfigEntry<float> MajorConstructDeathTimer;
         public static ConfigEntry<int> MajorConstructSpawnAmount;
         public static ConfigEntry<bool> MajorConstructSpawnSigmaInstead;
@@ -122,6 +154,9 @@ namespace RecoveredAndReformed
         public static ConfigEntry<string> BellFamily;
         public static ConfigEntry<bool> RemoveLarvaFamily;
         public static ConfigEntry<float> LarvaDetonateSelfDamage;
+        public static ConfigEntry<float> AWUShieldTime;
+        public static ConfigEntry<bool> DireseekerDropAtPlace;
+        public static ConfigEntry<float> FamilyEventChance;
         public static ExpansionDef DLC1 = null;
         public static List<DirectorCardCategorySelection> customFamilies = new();
 
@@ -140,6 +175,10 @@ namespace RecoveredAndReformed
             BellTowerMinStage = Config.Bind("Spawns", "Bell Tower Minimum Stage", 0, "Starting stage.");
             EliteMagmaWorm = Config.Bind("Spawns", "Enable Elite Magma Worms", false, "If true, allows spawning of elite magma worms.");
             EliteOverloadingWorm = Config.Bind("Spawns", "Enable Elite Overloading Worms", false, "If true, allows spawning of elite overloading worms.");
+            EliteAWU = Config.Bind("Spawns", "Enable Elite Alloy Worship Unit", false, "If true, allows spawning of elite AWUs.");
+            EliteAurellionite = Config.Bind("Spawns", "Enable Elite Aurellionite", false, "If true, allows spawning of elite aurellionites.");
+            EliteArtifactShell = Config.Bind("Spawns", "Enable Elite Artifact Reliquary", false, "If true, allows spawning of elite artifact reliquaries.");
+            EliteDireseeker = Config.Bind("Spawns", "Enable Elite Direseeker", false, "If true, allows spawning of elite direseekers.");
 
             MajorConstructHealth = Config.Bind("Basic Stats", "Iota Construct Base Health", 2100f, "");
             MajorConstructHealthStack = Config.Bind("Basic Stats", "Iota Construct Health Increase Per Level", 630f, "");
@@ -187,6 +226,33 @@ namespace RecoveredAndReformed
             AcidLarvaSpeed = Config.Bind("Basic Stats", "Acid Larva Speed", 1f, "");
             AcidLarvaArmor = Config.Bind("Basic Stats", "Acid Larva Armor", 0f, "");
             AcidLarvaCost = Config.Bind("Basic Stats", "Acid Larva Director Cost", 25, "");
+            AWUHealth = Config.Bind("Basic Stats", "Alloy Worship Unit Base Health", 2500f, "");
+            AWUHealthStack = Config.Bind("Basic Stats", "Alloy Worship Unit Health Increase Per Level", 750f, "");
+            AWUDamage = Config.Bind("Basic Stats", "Alloy Worship Unit Base Damage", 15f, "");
+            AWUDamageStack = Config.Bind("Basic Stats", "Alloy Worship Unit Damage Increase Per Level", 3f, "");
+            AWUAttackSpeed = Config.Bind("Basic Stats", "Alloy Worship Unit Attack Speed", 1f, "");
+            AWUSpeed = Config.Bind("Basic Stats", "Alloy Worship Unit Speed", 7f, "");
+            AWUArmor = Config.Bind("Basic Stats", "Alloy Worship Unit Armor", 30f, "");
+            AurellioniteHealth = Config.Bind("Basic Stats", "Aurellionite Base Health", 2100f, "");
+            AurellioniteHealthStack = Config.Bind("Basic Stats", "Aurellionite Health Increase Per Level", 630f, "");
+            AurellioniteDamage = Config.Bind("Basic Stats", "Aurellionite Base Damage", 40f, "");
+            AurellioniteDamageStack = Config.Bind("Basic Stats", "Aurellionite Damage Increase Per Level", 8f, "");
+            AurellioniteAttackSpeed = Config.Bind("Basic Stats", "Aurellionite Attack Speed", 1f, "");
+            AurellioniteSpeed = Config.Bind("Basic Stats", "Aurellionite Speed", 5f, "");
+            AurellioniteArmor = Config.Bind("Basic Stats", "Aurellionite Armor", 20f, "");
+            ArtifactShellHealth = Config.Bind("Basic Stats", "Artifact Reliquary Base Health", 100000f, "");
+            ArtifactShellHealthStack = Config.Bind("Basic Stats", "Artifact Reliquary Health Increase Per Level", 30000f, "");
+            ArtifactShellDamage = Config.Bind("Basic Stats", "Artifact Reliquary Base Damage", 30f, "Default: 10.");
+            ArtifactShellDamageStack = Config.Bind("Basic Stats", "Artifact Reliquary Damage Increase Per Level", 6f, "Default: 2.");
+            ArtifactShellAttackSpeed = Config.Bind("Basic Stats", "Artifact Reliquary Attack Speed", 1f, "");
+            ArtifactShellArmor = Config.Bind("Basic Stats", "Artifact Reliquary Armor", 100000f, "");
+            DireseekerHealth = Config.Bind("Basic Stats", "Direseeker Base Health", 2800f, "");
+            DireseekerHealthStack = Config.Bind("Basic Stats", "Direseeker Health Increase Per Level", 840f, "");
+            DireseekerDamage = Config.Bind("Basic Stats", "Direseeker Base Damage", 20f, "");
+            DireseekerDamageStack = Config.Bind("Basic Stats", "Direseeker Damage Increase Per Level", 4f, "");
+            DireseekerAttackSpeed = Config.Bind("Basic Stats", "Direseeker Attack Speed", 1f, "");
+            DireseekerSpeed = Config.Bind("Basic Stats", "Direseeker Speed", 11f, "");
+            DireseekerArmor = Config.Bind("Basic Stats", "Direseeker Armor", 0f, "");
 
             MajorConstructDeathTimer = Config.Bind("Iota Construct", "Death Timer", 5f, "Amount of seconds to show death animation for");
             MajorConstructSpawnAmount = Config.Bind("Iota Construct", "Spawn Amount", 3, "Amount of enemies to spawn in pillar raise phase");
@@ -214,6 +280,7 @@ namespace RecoveredAndReformed
             Assassin2Accurate = Config.Bind("Assassin", "Shuriken Accurate Enemies Compat", true, "oh they mess you up good");
             Assassin2AccurateLoop = Config.Bind("Assassin", "Shuriken Accurate Enemies Compat (loop only)", false, "oh they mess you up good");
 
+            FamilyEventChance = Config.Bind("Family Event", "Family Event Chance", 0.02f, "");
             EnableFamilyChange = Config.Bind("Family Event", "Enable Family Compats", true, "Enable all family event related compats.");
             TarFamily = Config.Bind("Family Event", "Enable Tar Family", "ancientloft, itancientloft, wispgraveyard, sulfurpools, goolake, itgoolake, drybasin", "Custom family event. List of scenes, separated by comma. blank to disable.");
             AltWispFamily = Config.Bind("Family Event", "Enable Alt Wisp Family", "ancientloft, itancientloft, frozenwall, snowyforest, forgottenhaven, FBLScene", "Custom family event. List of scenes, separated by comma. blank to disable. otherwise wisp enemies will be added to normal wisp group.");
@@ -222,12 +289,15 @@ namespace RecoveredAndReformed
             BellFamily = Config.Bind("Family Event", "Enable Bell Family", "itdampcave, dampcavesimple, shipgraveyard, itskymeadow, skymeadow, foggyswamp, FBLScene", "Custom family event. List of scenes, separated by comma. blank to disable. disables if BT is not loaded.");
             RemoveLarvaFamily = Config.Bind("Family Event", "Remove Larva Family Event", true, "jesus lol");
 
-            LarvaDetonateSelfDamage = Config.Bind("Basic Stats", "Acid Larva Detonation Self Damage Fraction", 1f, "What if larvas died on first leap (no way), Default: 0.25");
+            LarvaDetonateSelfDamage = Config.Bind("Sneaky Rebalance", "Acid Larva Detonation Self Damage Fraction", 1f, "What if larvas died on first leap (no way), Default: 0.25");
+            AWUShieldTime = Config.Bind("Sneaky Rebalance", "Alloy Worship Unit Shield Uptime", 2.5f, "Default: 6.");
+            DireseekerDropAtPlace = Config.Bind("Sneaky Rebalance", "Direseeker Drops Item In Place", true, "Literally where did it drop what");
+
             On.EntityStates.AcidLarva.LarvaLeap.OnEnter += (orig, self) => { orig(self); self.detonateSelfDamageFraction = LarvaDetonateSelfDamage.Value; };
 
             Reworks.IotaConstruct();
             Reworks.Assassin2();
-            DLC1 = Addressables.LoadAssetAsync<ExpansionDef>("RoR2/DLC1/Common/DLC1.asset").WaitForCompletion();
+            DLC1 = vanilla<ExpansionDef>("DLC1/Common/DLC1");
 
             if (Mods("PlasmaCore.ForgottenRelics"))
             {
@@ -246,6 +316,10 @@ namespace RecoveredAndReformed
                 CharacterBody bodyOverloadingWorm = BodyCatalog.FindBodyPrefab("ElectricWormBody").GetComponent<CharacterBody>();
                 CharacterBody bodyBellTower = BodyCatalog.FindBodyPrefab("BellTowerMonsterBody")?.GetComponent<CharacterBody>();
                 CharacterBody bodyAcidLarva = BodyCatalog.FindBodyPrefab("AcidLarvaBody").GetComponent<CharacterBody>();
+                CharacterBody bodyAWU = BodyCatalog.FindBodyPrefab("SuperRoboBallBossBody").GetComponent<CharacterBody>();
+                CharacterBody bodyAurellionite = BodyCatalog.FindBodyPrefab("TitanGoldBody").GetComponent<CharacterBody>();
+                CharacterBody bodyArtifactShell = BodyCatalog.FindBodyPrefab("ArtifactShellBody").GetComponent<CharacterBody>();
+                CharacterBody bodyDireseeker = BodyCatalog.FindBodyPrefab("DireseekerBossBody")?.GetComponent<CharacterBody>();
 
                 bodyMajorConstruct.baseMaxHealth = MajorConstructHealth.Value;
                 bodyMajorConstruct.levelMaxHealth = MajorConstructHealthStack.Value;
@@ -257,7 +331,7 @@ namespace RecoveredAndReformed
 
                 if (!string.IsNullOrWhiteSpace(MajorConstructSpawn.Value))
                 {
-                    bodyMajorConstruct.GetComponent<DeathRewards>().bossDropTable = Addressables.LoadAssetAsync<ExplicitPickupDropTable>("RoR2/DLC1/MajorAndMinorConstruct/dtBossMegaConstruct.asset").WaitForCompletion();
+                    bodyMajorConstruct.GetComponent<DeathRewards>().bossDropTable = vanilla<ExplicitPickupDropTable>("DLC1/MajorAndMinorConstruct/dtBossMegaConstruct");
                     bodyMajorConstruct.GetComponent<DeathRewards>().logUnlockableDef = LegacyResourcesAPI.Load<UnlockableDef>("UnlockableDefs/Logs.MajorConstructBody");
                 }
 
@@ -271,7 +345,7 @@ namespace RecoveredAndReformed
 
                 if (!string.IsNullOrWhiteSpace(Assassin2Spawn.Value))
                 {
-                    bodyAssassin2.gameObject.AddComponent<DeathRewards>().logUnlockableDef = Addressables.LoadAssetAsync<UnlockableDef>("RoR2/DLC1/Assassin2/Logs.Assassin2Body.asset").WaitForCompletion();
+                    bodyAssassin2.gameObject.AddComponent<DeathRewards>().logUnlockableDef = vanilla<UnlockableDef>("DLC1/Assassin2/Logs.Assassin2Body");
                 }
 
                 bodyMagmaWorm.baseMaxHealth = MagmaWormHealth.Value;
@@ -307,13 +381,47 @@ namespace RecoveredAndReformed
                 bodyAcidLarva.baseAttackSpeed = AcidLarvaAttackSpeed.Value;
                 bodyAcidLarva.baseMoveSpeed = AcidLarvaSpeed.Value;
                 bodyAcidLarva.baseArmor = AcidLarvaArmor.Value;
+
+                bodyAWU.baseMaxHealth = AWUHealth.Value;
+                bodyAWU.levelMaxHealth = AWUHealthStack.Value;
+                bodyAWU.baseDamage = AWUDamage.Value;
+                bodyAWU.levelDamage = AWUDamageStack.Value;
+                bodyAWU.baseAttackSpeed = AWUAttackSpeed.Value;
+                bodyAWU.baseMoveSpeed = AWUSpeed.Value;
+                bodyAWU.baseArmor = AWUArmor.Value;
+
+                bodyAurellionite.baseMaxHealth = AurellioniteHealth.Value;
+                bodyAurellionite.levelMaxHealth = AurellioniteHealthStack.Value;
+                bodyAurellionite.baseDamage = AurellioniteDamage.Value;
+                bodyAurellionite.levelDamage = AurellioniteDamageStack.Value;
+                bodyAurellionite.baseAttackSpeed = AurellioniteAttackSpeed.Value;
+                bodyAurellionite.baseMoveSpeed = AurellioniteSpeed.Value;
+                bodyAurellionite.baseArmor = AurellioniteArmor.Value;
+
+                bodyArtifactShell.baseMaxHealth = ArtifactShellHealth.Value;
+                bodyArtifactShell.levelMaxHealth = ArtifactShellHealthStack.Value;
+                bodyArtifactShell.baseDamage = ArtifactShellDamage.Value;
+                bodyArtifactShell.levelDamage = ArtifactShellDamageStack.Value;
+                bodyArtifactShell.baseAttackSpeed = ArtifactShellAttackSpeed.Value;
+                bodyArtifactShell.baseArmor = ArtifactShellArmor.Value;
+
+                if (bodyDireseeker != null)
+                {
+                    bodyDireseeker.baseMaxHealth = DireseekerHealth.Value;
+                    bodyDireseeker.levelMaxHealth = DireseekerHealthStack.Value;
+                    bodyDireseeker.baseDamage = DireseekerDamage.Value;
+                    bodyDireseeker.levelDamage = DireseekerDamageStack.Value;
+                    bodyDireseeker.baseAttackSpeed = DireseekerAttackSpeed.Value;
+                    bodyDireseeker.baseMoveSpeed = DireseekerSpeed.Value;
+                    bodyDireseeker.baseArmor = DireseekerArmor.Value;
+                }
             });
 
-            CharacterSpawnCard cscMajorConstruct = Addressables.LoadAssetAsync<CharacterSpawnCard>("RoR2/DLC1/MajorAndMinorConstruct/cscMajorConstruct.asset").WaitForCompletion();
-            CharacterSpawnCard cscAssassin2 = Addressables.LoadAssetAsync<CharacterSpawnCard>("RoR2/DLC1/Assassin2/cscAssassin2.asset").WaitForCompletion();
-            CharacterSpawnCard cscMagmaWorm = LegacyResourcesAPI.Load<CharacterSpawnCard>("SpawnCards/CharacterSpawnCards/cscMagmaWorm");
-            CharacterSpawnCard cscOverloadingWorm = LegacyResourcesAPI.Load<CharacterSpawnCard>("SpawnCards/CharacterSpawnCards/cscElectricWorm");
-            CharacterSpawnCard cscAcidLarva = LegacyResourcesAPI.Load<CharacterSpawnCard>("SpawnCards/CharacterSpawnCards/cscAcidLarva");
+            CharacterSpawnCard cscMajorConstruct = vanilla<CharacterSpawnCard>("DLC1/MajorAndMinorConstruct/cscMajorConstruct");
+            CharacterSpawnCard cscAssassin2 = vanilla<CharacterSpawnCard>("DLC1/Assassin2/cscAssassin2");
+            CharacterSpawnCard cscMagmaWorm = vanilla<CharacterSpawnCard>("Base/MagmaWorm/cscMagmaWorm");
+            CharacterSpawnCard cscOverloadingWorm = vanilla<CharacterSpawnCard>("Base/ElectricWorm/cscElectricWorm");
+            CharacterSpawnCard cscAcidLarva = vanilla<CharacterSpawnCard>("DLC1/AcidLarva/cscAcidLarva");
 
             cscMajorConstruct.directorCreditCost = MajorConstructCost.Value;
             cscAssassin2.directorCreditCost = Assassin2Cost.Value;
@@ -341,16 +449,24 @@ namespace RecoveredAndReformed
                 minimumStageCompletions = Assassin2MinStage.Value - 1,
                 preventOverhead = true
             };
-            if (EliteMagmaWorm.Value)
+            if (EliteMagmaWorm.Value) enableElite(cscMagmaWorm);
+            if (EliteOverloadingWorm.Value) enableElite(cscOverloadingWorm);
+            if (EliteAWU.Value) enableElite(vanilla<CharacterSpawnCard>("Base/RoboBallBoss/cscSuperRoboBallBoss"));
+            if (EliteAurellionite.Value) enableElite(vanilla<CharacterSpawnCard>("Base/Titan/cscTitanGold"));
+            if (EliteArtifactShell.Value) On.EntityStates.ArtifactShell.WaitForIntro.OnEnter += (orig, self) =>
             {
-                cscMagmaWorm.noElites = false;
-                cscMagmaWorm.eliteRules = SpawnCard.EliteRules.Default;
-            }
-            if (EliteOverloadingWorm.Value)
-            {
-                cscOverloadingWorm.noElites = false;
-                cscOverloadingWorm.eliteRules = SpawnCard.EliteRules.Default;
-            }
+                orig(self);
+                if (self.characterBody.eliteBuffCount != 0) return;
+                List<EliteDef> defs = new();
+                foreach (var list in CombatDirector.eliteTiers.Where(x => RunArtifactManager.instance.IsArtifactEnabled(RoR2Content.Artifacts.EliteOnly) || (x.CanSelect(SpawnCard.EliteRules.Default) && x.costMultiplier < Run.instance.loopClearCount * 10)).ToList().ConvertAll(x => x.eliteTypes))
+                    foreach (var z in list) if (z != null && z.IsAvailable()) defs.Add(z);
+                EliteDef def = Run.instance.spawnRng.NextElementUniform(defs);
+                self.characterBody.AddBuff(def.eliteEquipmentDef.passiveBuffDef);
+            };
+            if (EliteDireseeker.Value && Mods("com.rob.Direseeker")) enableDireseeker();
+            void enableDireseeker() => enableElite(DireseekerMod.Modules.SpawnCards.bossSpawnCard);
+            void enableElite(CharacterSpawnCard csc) { csc.noElites = false; csc.eliteRules = SpawnCard.EliteRules.Default; };
+
             DirectorCardHolder majorConstructDCH = new() { Card = majorConstructDC, MonsterCategory = MonsterCategory.Champions };
             DirectorCardHolder assassin2DCH = new() { Card = assassin2DC, MonsterCategory = MonsterCategory.BasicMonsters };
             string[] iotalist = listify(MajorConstructSpawn.Value).ToArray();
@@ -378,6 +494,7 @@ namespace RecoveredAndReformed
             }
 
             // Families
+            ClassicStageInfo.monsterFamilyChance = FamilyEventChance.Value;
             void addManual(string k, DirectorCardHolder v)
             {
                 if (!manualDCCSAdd.ContainsKey(k)) manualDCCSAdd.Add(k, new());
@@ -432,7 +549,7 @@ namespace RecoveredAndReformed
                     }
                     if (!FRCSharp.VF2ConfigManager.disableBellTower.Value && !string.IsNullOrWhiteSpace(BellFamily.Value))
                     {
-                        DirectorCard dc = GetDirectorCard(Addressables.LoadAssetAsync<CharacterSpawnCard>("RoR2/Base/Bell/cscBell.asset").WaitForCompletion());
+                        DirectorCard dc = GetDirectorCard(vanilla<CharacterSpawnCard>("Base/Bell/cscBell"));
                         dc.preventOverhead = true;
                         AddFamilyEvent("Bell", new() { new() { Card = dc, MonsterCategory = MonsterCategory.Minibosses } }, listify(BellFamily.Value)).AddCard(new()
                         {
@@ -441,10 +558,10 @@ namespace RecoveredAndReformed
                         });
                     }
                 }
-                if (RemoveLarvaFamily.Value) onRebuildCards += self =>
-                {
-                    if (self.monsterDccsPool.poolCategories.Length >= 2) self.monsterDccsPool.poolCategories[1].includedIfConditionsMet = self.monsterDccsPool.poolCategories[1].includedIfConditionsMet.Where(x => x.dccs.name != "dccsAcidLarvaFamily").ToArray();
-                };
+                if (RemoveLarvaFamily.Value) onRebuildCards += self => { if (self.monsterDccsPool.poolCategories.Length >= 2) 
+                        self.monsterDccsPool.poolCategories[1].includedIfConditionsMet = self.monsterDccsPool.poolCategories[1].includedIfConditionsMet.Where(x => x.dccs.name != "dccsAcidLarvaFamily").ToArray(); };
+                RoR2Application.onLoad += () => EntityStates.RoboBallBoss.Weapon.FireSuperDelayKnockup.shieldDuration = AWUShieldTime.Value;
+                if (DireseekerDropAtPlace.Value) Harmony.PatchAll(typeof(PatchDireseeker));
                 LanguageAPI.Add("FAMILY_BELL", "<style=cWorldEvent>[WARNING] The clock is ticking...</style>");
                 if (Mods("com.Moffein.ClayMen") && !string.IsNullOrWhiteSpace(TarFamily.Value)) addClaymen();
                 void addClaymen() => addManual("dccsTarFamily", ClayMen.ClayMenContent.ClayManCard);
@@ -452,33 +569,34 @@ namespace RecoveredAndReformed
                 void addAncientWisp() => addManual(wispFamily, AncientWisp.AWContent.AncientWispCard);
                 if (Mods("com.Moffein.ArchaicWisp")) addArchaicWisp();
                 void addArchaicWisp() => addManual(wispFamily, ArchaicWisp.ArchaicWispContent.ArchaicWispCard);
-                AddFamilyToStages(Addressables.LoadAssetAsync<DccsPool>("RoR2/DLC1/sulfurpools/dpSulfurPoolsMonsters.asset").WaitForCompletion().poolCategories[1].includedIfConditionsMet.First(x => x.dccs.name == "dccsConstructFamily").dccs as FamilyDirectorCardCategorySelection,
-                    new() { "itskymeadow", "skymeadow", "FBLScene", "forgottenhaven", "golemplains", "golemplains2" });
-                AddFamilyToStages(Addressables.LoadAssetAsync<DccsPool>("RoR2/Base/dampcave/dpDampCaveMonsters.asset").WaitForCompletion().poolCategories[1].includedIfConditionsMet.First(x => x.dccs.name == "dccsLemurianFamily").dccs as FamilyDirectorCardCategorySelection,
-                    new() { "goldshores" });
-                AddFamilyToStages(Addressables.LoadAssetAsync<DccsPool>("RoR2/Base/golemplains/dpGolemplainsMonsters.asset").WaitForCompletion().poolCategories[1].includedIfConditionsMet.First(x => x.dccs.name == "dccsGolemFamily").dccs as FamilyDirectorCardCategorySelection,
-                    new() { "goldshores", "FBLScene", "forgottenhaven" });
+                AddFamilyToStages(vanilla<FamilyDirectorCardCategorySelection>("Base/Common/dccsParentFamily"), new() { "itskymeadow", "skymeadow", "forgottenhaven", "slumberingsatellite", "artifactworld" });
+                AddFamilyToStages(vanilla<FamilyDirectorCardCategorySelection>("DLC1/Common/dccsConstructFamily"), new() { "itskymeadow", "skymeadow", "FBLScene", "forgottenhaven", "golemplains", "golemplains2" });
+                AddFamilyToStages(vanilla<FamilyDirectorCardCategorySelection>("Base/Common/dccsLemurianFamily"), new() { "drybasin", "goldshores" });
+                AddFamilyToStages(vanilla<FamilyDirectorCardCategorySelection>("Base/Common/dccsGolemFamily"), new() { "forgottenhaven" });
+                AddFamilyToStages(vanilla<FamilyDirectorCardCategorySelection>("Base/Common/dccsGolemFamilyNature"), new() { "goldshores", "FBLScene" });
+                addManual("dccsGupFamily", new() { Card = GetDirectorCard(vanilla<CharacterSpawnCard>("DLC1/Gup/cscGeepBody")), MonsterCategory = MonsterCategory.Minibosses });
+                addManual("dccsGupFamily", new() { Card = GetDirectorCard(vanilla<CharacterSpawnCard>("DLC1/Gup/cscGipBody")), MonsterCategory = MonsterCategory.BasicMonsters });
             }
             if (!string.IsNullOrWhiteSpace(TarFamily.Value)) AddFamilyEvent("Tar", new() {
-                new() { Card = GetDirectorCard(Addressables.LoadAssetAsync<CharacterSpawnCard>("RoR2/Base/ClayBoss/cscClayBoss.asset").WaitForCompletion()), MonsterCategory = MonsterCategory.Champions },
-                new() { Card = GetDirectorCard(Addressables.LoadAssetAsync<CharacterSpawnCard>("RoR2/Base/ClayBruiser/cscClayBruiser.asset").WaitForCompletion()), MonsterCategory = MonsterCategory.Minibosses },
-                new() { Card = GetDirectorCard(Addressables.LoadAssetAsync<CharacterSpawnCard>("RoR2/DLC1/ClayGrenadier/cscClayGrenadier.asset").WaitForCompletion()), MonsterCategory = MonsterCategory.Minibosses }
+                new() { Card = GetDirectorCard(vanilla<CharacterSpawnCard>("Base/ClayBoss/cscClayBoss")), MonsterCategory = MonsterCategory.Champions },
+                new() { Card = GetDirectorCard(vanilla<CharacterSpawnCard>("Base/ClayBruiser/cscClayBruiser")), MonsterCategory = MonsterCategory.Minibosses },
+                new() { Card = GetDirectorCard(vanilla<CharacterSpawnCard>("DLC1/ClayGrenadier/cscClayGrenadier")), MonsterCategory = MonsterCategory.Minibosses }
             }, listify(TarFamily.Value));
             LanguageAPI.Add("FAMILY_TAR", "<style=cWorldEvent>[WARNING] The ground oozes with tar...</style>");
             if (!string.IsNullOrWhiteSpace(AltWispFamily.Value)) AddFamilyEvent("AltWisp", new() 
             { 
-                new() { Card = GetDirectorCard(Addressables.LoadAssetAsync<CharacterSpawnCard>("RoR2/Base/Wisp/cscLesserWisp.asset").WaitForCompletion()), MonsterCategory = MonsterCategory.BasicMonsters }
+                new() { Card = GetDirectorCard(vanilla<CharacterSpawnCard>("Base/Wisp/cscLesserWisp")), MonsterCategory = MonsterCategory.BasicMonsters }
             }, listify(AltWispFamily.Value));
             LanguageAPI.Add("FAMILY_ALTWISP", "<style=cWorldEvent>[WARNING] The air begins to burn,</style> <style=cDeath>but...</style>");
             if (!string.IsNullOrWhiteSpace(SolusFamily.Value))
             {
-                DirectorCard vultureDC = GetDirectorCard(Addressables.LoadAssetAsync<CharacterSpawnCard>("RoR2/Base/Vulture/cscVulture.asset").WaitForCompletion());
+                DirectorCard vultureDC = GetDirectorCard(vanilla<CharacterSpawnCard>("Base/Vulture/cscVulture"));
                 vultureDC.preventOverhead = true;
                 AddFamilyEvent("Solus", new()
                 {
-                    new() { Card = GetDirectorCard(Addressables.LoadAssetAsync<CharacterSpawnCard>("RoR2/Base/RoboBallBoss/cscRoboBallBoss.asset").WaitForCompletion()), MonsterCategory = MonsterCategory.Champions },
+                    new() { Card = GetDirectorCard(vanilla<CharacterSpawnCard>("Base/RoboBallBoss/cscRoboBallBoss")), MonsterCategory = MonsterCategory.Champions },
                     new() { Card = vultureDC, MonsterCategory = MonsterCategory.BasicMonsters },
-                    new() { Card = GetDirectorCard(Addressables.LoadAssetAsync<CharacterSpawnCard>("RoR2/Base/RoboBallBoss/cscRoboBallMini.asset").WaitForCompletion()), MonsterCategory = MonsterCategory.BasicMonsters }
+                    new() { Card = GetDirectorCard(vanilla<CharacterSpawnCard>("Base/RoboBallBoss/cscRoboBallMini")), MonsterCategory = MonsterCategory.BasicMonsters }
                 }, listify(SolusFamily.Value));
             }
             LanguageAPI.Add("FAMILY_SOLUS", "<style=cWorldEvent>[WARNING] The flying ones are restless today...</style>");
@@ -489,8 +607,8 @@ namespace RecoveredAndReformed
                 electricWormDC.spawnDistance = DirectorCore.MonsterSpawnDistance.Far;
                 AddFamilyEvent("Blind", new()
                 {
-                    new() { Card = GetDirectorCard(Addressables.LoadAssetAsync<CharacterSpawnCard>("RoR2/DLC1/Vermin/cscVermin.asset").WaitForCompletion()), MonsterCategory = MonsterCategory.BasicMonsters },
-                    new() { Card = GetDirectorCard(Addressables.LoadAssetAsync<CharacterSpawnCard>("RoR2/DLC1/FlyingVermin/cscFlyingVermin.asset").WaitForCompletion()), MonsterCategory = MonsterCategory.BasicMonsters },
+                    new() { Card = GetDirectorCard(vanilla<CharacterSpawnCard>("DLC1/Vermin/cscVermin")), MonsterCategory = MonsterCategory.BasicMonsters },
+                    new() { Card = GetDirectorCard(vanilla<CharacterSpawnCard>("DLC1/FlyingVermin/cscFlyingVermin")), MonsterCategory = MonsterCategory.BasicMonsters },
                     new() { Card = magmaWormDC, MonsterCategory = MonsterCategory.Champions },
                     new() { Card = electricWormDC, MonsterCategory = MonsterCategory.Champions }
                 }, listify(BlindFamily.Value));
@@ -560,5 +678,6 @@ namespace RecoveredAndReformed
             }
             return ret;
         }
+        public static T vanilla<T>(string path) => Addressables.LoadAssetAsync<T>($"RoR2/{path}.asset").WaitForCompletion();
     }
 }

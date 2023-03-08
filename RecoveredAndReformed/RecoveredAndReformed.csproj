@@ -48,6 +48,9 @@
 	  <Reference Include="DiggerUnearthed">
 	    <HintPath>..\..\libs\DiggerUnearthed-nstrip.dll</HintPath>
 	  </Reference>
+	  <Reference Include="Direseeker">
+	    <HintPath>..\..\libs\Direseeker-nstrip.dll</HintPath>
+	  </Reference>
 	  <Reference Include="EvenFasterBossWait">
 	    <HintPath>..\..\libs\EvenFasterBossWait-nstrip.dll</HintPath>
 	  </Reference>
