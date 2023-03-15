@@ -17,12 +17,6 @@ Adds enemies that were cut during development, and remixes it to be more fitting
   * The melee attack of the assassin temporarily makes you *frail!* make sure to retreat if you're hit.
   * [AccurateEnemies](https://thunderstore.io/package/Moffein/AccurateEnemies) compat: the enemy is extra accurate with its ranged, *shuriken* hit.
 
-* [Forgotten Relics](https://thunderstore.io/package/PlasmaCore3/Forgotten_Relics) compat: Adds **Bell Tower**, a boss brass contraption monster.
-![Image](https://media.discordapp.net/attachments/515678821408571392/1082909508122198026/20230308151533_1.jpg)
-  * Bell Tower is a support-focused stationary boss that frequently *summons* other contraptions. 
-  * This does not mean itself does not pack a punch however, as its *projectiles* are as deadly as its younger sibling.
-  * The powerful *ground slam* is enough to put you in low health in just one shot! Make sure to get off the ground when it raises its base and prepares its attack.
-
 * Ability to spawn Elite variants of Magma Worm, Overloading Worm, Alloy Worship Unit, Aurellionite, Artifact Reliquary and [Direseeker](https://thunderstore.io/package/EnforcerGang/Direseeker/).
 ![Image](https://media.discordapp.net/attachments/515678821408571392/1082919853695967314/20230308155635_1.jpg)
 
@@ -48,7 +42,7 @@ Every value is defaulted to what the original value was, unless stated otherwise
 * New **Wisp? Family**: Lesser Wisp, [Frost Wisp](https://thunderstore.io/package/PlasmaCore3/Forgotten_Relics), [Archaic Wisp](https://thunderstore.io/package/Moffein/Archaic_Wisp), [Ancient Wisp](https://thunderstore.io/package/Moffein/Ancient_Wisp)
 * New **Solus Family**: Alloy Vulture, Solus Probe, Solus Control Unit
 * New **Blind Family**: Blind Vermin, Blind Pest, Magma Worm, Overloading Worm
-* New **Bell Family**: Brass Contraption, [Bell Tower](https://thunderstore.io/package/PlasmaCore3/Forgotten_Relics) (only added if Bell Tower is enabled)
+* New **Bell Family**: Brass Contraption, [Brass Monolith](https://thunderstore.io/package/PlasmaCore3/Forgotten_Relics) (only added if Bell Tower is enabled)
 * Adds **Parent Family** (cut content).
 * Construct Family Event is now also possible at Sky Meadow, [Fogbound Lagoon](https://thunderstore.io/package/JaceDaDorito/FogboundLagoon), [Forgotten Haven](https://thunderstore.io/package/PlasmaCore3/Forgotten_Relics), and Titanic Plains.
 * Lemurian Family Event is now also possible at [Dry Basin](https://thunderstore.io/package/PlasmaCore3/Forgotten_Relics).
@@ -61,7 +55,8 @@ Every value is defaulted to what the original value was, unless stated otherwise
 * Larvas have double damage but will now explode on first leap attack, Configurable.
 * Artifact Reliquary deal double damage.
 * Alloy Worship Unit's Invulnerability time reduced. Default: 6 seconds.
-* Direseeker will now drop items on its death position.
+* [Direseeker](https://thunderstore.io/package/EnforcerGang/Direseeker/) will now drop items on its death position.
+* [Brass Monolith](https://thunderstore.io/package/PlasmaCore3/Forgotten_Relics) will spawn on [Fogbound Lagoon](https://thunderstore.io/package/JaceDaDorito/FogboundLagoon).
 
 ## Compatibility
 - Make sure to turn off `2b - Family Events > Add extra Family Events` from [LittleGameplayTweaks](https://thunderstore.io/package/Wolfo/LittleGameplayTweaks/) (or this mod's family event settings) as it does the same(ish) thing.
@@ -72,6 +67,7 @@ Every value is defaulted to what the original value was, unless stated otherwise
 * **Anreol** for [Released from the Void](https://thunderstore.io/package/Anreol/ReleasedFromTheVoid), where the name for Iota Construct came from. If you want a different flavor of Iota Construct / Assassin that is more closer to how it was intended, check it out.
 
 ## Changelog
+- 1.0.3: Removed Bell Tower (now Brass Monolith) settings, as it was reworked back in
 - 1.0.2: Special boss elites, awu/direseeker tweaks
 - 1.0.1: Gup family, Lemurian family, Parent family tweaks, family event chance config
 - 1.0.0: Initial Release

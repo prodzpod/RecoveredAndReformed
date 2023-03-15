@@ -6,7 +6,6 @@ using HarmonyLib;
 using Mono.Cecil.Cil;
 using MonoMod.Cil;
 using R2API;
-using R2API.Utils;
 using RoR2;
 using RoR2.ExpansionManagement;
 using System;
@@ -29,23 +28,22 @@ namespace RecoveredAndReformed
     [BepInDependency("com.Moffein.AncientWisp", BepInDependency.DependencyFlags.SoftDependency)]
     [BepInDependency("com.Moffein.AccurateEnemies", BepInDependency.DependencyFlags.SoftDependency)]
     [BepInDependency("PlasmaCore.ForgottenRelics", BepInDependency.DependencyFlags.SoftDependency)]
+    [BepInDependency("JaceDaDorito.FBLStage", BepInDependency.DependencyFlags.SoftDependency)]
     [BepInDependency("com.rob.Direseeker", BepInDependency.DependencyFlags.SoftDependency)]
     public class Main : BaseUnityPlugin
     {
         public const string PluginGUID = PluginAuthor + "." + PluginName;
         public const string PluginAuthor = "prodzpod";
         public const string PluginName = "RecoveredAndReformed";
-        public const string PluginVersion = "1.0.2";
+        public const string PluginVersion = "1.0.3";
         public static ManualLogSource Log;
         public static PluginInfo pluginInfo;
         public static Harmony Harmony;
         public static ConfigFile Config;
         public static ConfigEntry<string> MajorConstructSpawn;
         public static ConfigEntry<string> Assassin2Spawn;
-        public static ConfigEntry<string> BellTowerSpawn;
         public static ConfigEntry<int> MajorConstructMinStage;
         public static ConfigEntry<int> Assassin2MinStage;
-        public static ConfigEntry<int> BellTowerMinStage;
         public static ConfigEntry<bool> EliteMagmaWorm;
         public static ConfigEntry<bool> EliteOverloadingWorm;
         public static ConfigEntry<bool> EliteAWU;
@@ -83,13 +81,6 @@ namespace RecoveredAndReformed
         public static ConfigEntry<float> OverloadingWormSpeed;
         public static ConfigEntry<float> OverloadingWormArmor;
         public static ConfigEntry<int> OverloadingWormCost;
-        public static ConfigEntry<float> BellTowerHealth;
-        public static ConfigEntry<float> BellTowerHealthStack;
-        public static ConfigEntry<float> BellTowerDamage;
-        public static ConfigEntry<float> BellTowerDamageStack;
-        public static ConfigEntry<float> BellTowerAttackSpeed;
-        public static ConfigEntry<float> BellTowerArmor;
-        public static ConfigEntry<int> BellTowerCost;
         public static ConfigEntry<float> AcidLarvaHealth;
         public static ConfigEntry<float> AcidLarvaHealthStack;
         public static ConfigEntry<float> AcidLarvaDamage;
@@ -169,10 +160,8 @@ namespace RecoveredAndReformed
 
             MajorConstructSpawn = Config.Bind("Spawns", "Iota Construct Spawn Scenes", "skymeadow, itskymeadow, sulfurpools, itgolemplains, golemplains, golemplains2, forgottenhaven, FBLScene", "List of scene names, separated by comma. By default, where Xi Construct spawns.");
             Assassin2Spawn = Config.Bind("Spawns", "Assassin Spawn Scenes", "blackbeach, blackbeach2, rootjungle, arena, shipgraveyard, wispgraveyard, itancientloft, ancientloft", "List of scene names, separated by comma.");
-            BellTowerSpawn = Config.Bind("Spawns", "Bell Tower Spawn Scenes", "itdampcave, dampcavesimple, shipgraveyard, itskymeadow, skymeadow, foggyswamp, FBLScene", "List of scene names, separated by comma. Temporary config. Make sure to set FR Config > Disable Bell Tower = false before running.");
             MajorConstructMinStage = Config.Bind("Spawns", "Iota Construct Minimum Stage", 4, "Starting stage.");
             Assassin2MinStage = Config.Bind("Spawns", "Assassin Minimum Stage", 3, "Starting stage.");
-            BellTowerMinStage = Config.Bind("Spawns", "Bell Tower Minimum Stage", 0, "Starting stage.");
             EliteMagmaWorm = Config.Bind("Spawns", "Enable Elite Magma Worms", false, "If true, allows spawning of elite magma worms.");
             EliteOverloadingWorm = Config.Bind("Spawns", "Enable Elite Overloading Worms", false, "If true, allows spawning of elite overloading worms.");
             EliteAWU = Config.Bind("Spawns", "Enable Elite Alloy Worship Unit", false, "If true, allows spawning of elite AWUs.");
@@ -211,13 +200,6 @@ namespace RecoveredAndReformed
             OverloadingWormSpeed = Config.Bind("Basic Stats", "Overloading Worm Speed", 20f, "");
             OverloadingWormArmor = Config.Bind("Basic Stats", "Overloading Worm Armor", 15f, "");
             OverloadingWormCost = Config.Bind("Basic Stats", "Overloading Worm Director Cost", 4000, "");
-            BellTowerHealth = Config.Bind("Basic Stats", "Bell Tower Base Health", 3625f, "");
-            BellTowerHealthStack = Config.Bind("Basic Stats", "Bell Tower Health Increase Per Level", 1088f, "");
-            BellTowerDamage = Config.Bind("Basic Stats", "Bell Tower Base Damage", 15f, "");
-            BellTowerDamageStack = Config.Bind("Basic Stats", "Bell Tower Damage Increase Per Level", 3f, "");
-            BellTowerAttackSpeed = Config.Bind("Basic Stats", "Bell Tower Attack Speed", 1f, "");
-            BellTowerArmor = Config.Bind("Basic Stats", "Bell Tower Armor", 15f, "");
-            BellTowerCost = Config.Bind("Basic Stats", "Bell Tower Director Cost", 750, "");
             AcidLarvaHealth = Config.Bind("Basic Stats", "Acid Larva Base Health", 45f, "");
             AcidLarvaHealthStack = Config.Bind("Basic Stats", "Acid Larva Health Increase Per Level", 14f, "");
             AcidLarvaDamage = Config.Bind("Basic Stats", "Acid Larva Base Damage", 22f, "Default: 11.");
@@ -299,13 +281,6 @@ namespace RecoveredAndReformed
             Reworks.Assassin2();
             DLC1 = vanilla<ExpansionDef>("DLC1/Common/DLC1");
 
-            if (Mods("PlasmaCore.ForgottenRelics"))
-            {
-                Harmony.PatchAll(typeof(PatchVF2Start));
-                addCoilGolemLogbook();
-            }
-            void addCoilGolemLogbook() { if (!FRCSharp.VF2ConfigManager.disableCoilGolem.Value) FRCSharp.VF2ContentPackProvider.contentPack.bodyPrefabs.Add(new GameObject[] { FRCSharp.VF2ContentPackProvider.coilGolemBody }); }
-
             // Stats change ----------------------------------------------------------------------------------------------------
 
             BodyCatalog.availability.CallWhenAvailable(() =>
@@ -314,7 +289,6 @@ namespace RecoveredAndReformed
                 CharacterBody bodyAssassin2 = BodyCatalog.FindBodyPrefab("Assassin2Body").GetComponent<CharacterBody>();
                 CharacterBody bodyMagmaWorm = BodyCatalog.FindBodyPrefab("MagmaWormBody").GetComponent<CharacterBody>();
                 CharacterBody bodyOverloadingWorm = BodyCatalog.FindBodyPrefab("ElectricWormBody").GetComponent<CharacterBody>();
-                CharacterBody bodyBellTower = BodyCatalog.FindBodyPrefab("BellTowerMonsterBody")?.GetComponent<CharacterBody>();
                 CharacterBody bodyAcidLarva = BodyCatalog.FindBodyPrefab("AcidLarvaBody").GetComponent<CharacterBody>();
                 CharacterBody bodyAWU = BodyCatalog.FindBodyPrefab("SuperRoboBallBossBody").GetComponent<CharacterBody>();
                 CharacterBody bodyAurellionite = BodyCatalog.FindBodyPrefab("TitanGoldBody").GetComponent<CharacterBody>();
@@ -363,16 +337,6 @@ namespace RecoveredAndReformed
                 bodyOverloadingWorm.baseAttackSpeed = OverloadingWormAttackSpeed.Value;
                 bodyOverloadingWorm.baseMoveSpeed = OverloadingWormSpeed.Value;
                 bodyOverloadingWorm.baseArmor = OverloadingWormArmor.Value;
-
-                if (bodyBellTower != null)
-                {
-                    bodyBellTower.baseMaxHealth = BellTowerHealth.Value;
-                    bodyBellTower.levelMaxHealth = BellTowerHealthStack.Value;
-                    bodyBellTower.baseDamage = BellTowerDamage.Value;
-                    bodyBellTower.levelDamage = BellTowerDamageStack.Value;
-                    bodyBellTower.baseAttackSpeed = BellTowerAttackSpeed.Value;
-                    bodyBellTower.baseArmor = BellTowerArmor.Value;
-                }
 
                 bodyAcidLarva.baseMaxHealth = AcidLarvaHealth.Value;
                 bodyAcidLarva.levelMaxHealth = AcidLarvaHealthStack.Value;
@@ -428,8 +392,6 @@ namespace RecoveredAndReformed
             cscMagmaWorm.directorCreditCost = MagmaWormCost.Value;
             cscOverloadingWorm.directorCreditCost = OverloadingWormCost.Value;
             cscAcidLarva.directorCreditCost = AcidLarvaCost.Value;
-            if (Mods("PlasmaCore.ForgottenRelics")) changeBTCost();
-            void changeBTCost() => FRCSharp.VF2ContentPackProvider.cscBellTower.directorCreditCost = BellTowerCost.Value;
 
             // spawns ----------------------------------------------------------------------------------------------------
 
@@ -471,7 +433,6 @@ namespace RecoveredAndReformed
             DirectorCardHolder assassin2DCH = new() { Card = assassin2DC, MonsterCategory = MonsterCategory.BasicMonsters };
             string[] iotalist = listify(MajorConstructSpawn.Value).ToArray();
             string[] assassinlist = listify(Assassin2Spawn.Value).ToArray();
-            string[] btlist = listify(BellTowerSpawn.Value).ToArray();
             Dictionary<string, List<DirectorCardHolder>> manualDCCSAdd = new();
             if (!string.IsNullOrWhiteSpace(MajorConstructSpawn.Value))
             {
@@ -484,14 +445,8 @@ namespace RecoveredAndReformed
                 AddNewMonsterToStagesWhere(assassin2DCH, false, info => assassinlist.Contains(info.CustomStageName) || assassinlist.Contains(info.ToInternalStageName()));
                 RoR2Application.onLoad += () => RoR2Content.mixEnemyMonsterCards.AddCard(assassin2DCH);
             }
-            if (Mods("PlasmaCore.ForgottenRelics")) ReaddBT();
-            void ReaddBT()
-            {
-                if (FRCSharp.VF2ConfigManager.disableBellTower.Value) return;
-                DirectorCard dc = GetDirectorCard(FRCSharp.VF2ContentPackProvider.cscBellTower);
-                dc.minimumStageCompletions = BellTowerMinStage.Value;
-                AddNewMonsterToStagesWhere(new() { Card = dc, MonsterCategory = MonsterCategory.Champions }, false, info => btlist.Contains(info.CustomStageName) || btlist.Contains(info.ToInternalStageName()));
-            }
+            if (Mods("PlasmaCore.ForgottenRelics", "JaceDaDorito.FBLStage")) addBTtoFBL();
+            void addBTtoFBL() => AddNewMonsterToStage(new() { Card = GetDirectorCard(FRCSharp.VF2ContentPackProvider.cscBellMinion), MonsterCategory = MonsterCategory.Champions }, false, DirectorAPI.Stage.Custom, "FBLScene");
 
             // Families
             ClassicStageInfo.monsterFamilyChance = FamilyEventChance.Value;
