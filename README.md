@@ -67,6 +67,8 @@ Every value is defaulted to what the original value was, unless stated otherwise
 * **Anreol** for [Released from the Void](https://thunderstore.io/package/Anreol/ReleasedFromTheVoid), where the name for Iota Construct came from. If you want a different flavor of Iota Construct / Assassin that is more closer to how it was intended, check it out.
 
 ## Changelog
+- 1.0.5: Bugfix
+- 1.0.4: Bugfix
 - 1.0.3: Removed Bell Tower (now Brass Monolith) settings, as it was reworked back in
 - 1.0.2: Special boss elites, awu/direseeker tweaks
 - 1.0.1: Gup family, Lemurian family, Parent family tweaks, family event chance config

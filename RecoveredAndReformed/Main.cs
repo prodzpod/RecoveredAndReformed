@@ -35,7 +35,7 @@ namespace RecoveredAndReformed
         public const string PluginGUID = PluginAuthor + "." + PluginName;
         public const string PluginAuthor = "prodzpod";
         public const string PluginName = "RecoveredAndReformed";
-        public const string PluginVersion = "1.0.3";
+        public const string PluginVersion = "1.0.5";
         public static ManualLogSource Log;
         public static PluginInfo pluginInfo;
         public static Harmony Harmony;
@@ -446,7 +446,7 @@ namespace RecoveredAndReformed
                 RoR2Application.onLoad += () => RoR2Content.mixEnemyMonsterCards.AddCard(assassin2DCH);
             }
             if (Mods("PlasmaCore.ForgottenRelics", "JaceDaDorito.FBLStage")) addBTtoFBL();
-            void addBTtoFBL() => AddNewMonsterToStage(new() { Card = GetDirectorCard(FRCSharp.VF2ContentPackProvider.cscBellMinion), MonsterCategory = MonsterCategory.Champions }, false, DirectorAPI.Stage.Custom, "FBLScene");
+            void addBTtoFBL() { if (!FRCSharp.VF2ConfigManager.disableBrassMonolith.Value) AddNewMonsterToStage(new() { Card = GetDirectorCard(FRCSharp.VF2ContentPackProvider.cscBellTower), MonsterCategory = MonsterCategory.Champions }, false, DirectorAPI.Stage.Custom, "FBLScene"); }
 
             // Families
             ClassicStageInfo.monsterFamilyChance = FamilyEventChance.Value;
@@ -502,7 +502,7 @@ namespace RecoveredAndReformed
                         addManual("dccsGolemFamily", new() { Card = dc, MonsterCategory = MonsterCategory.Minibosses });
                         addManual("fdccsGolemSandy", new() { Card = dc, MonsterCategory = MonsterCategory.Minibosses });
                     }
-                    if (!FRCSharp.VF2ConfigManager.disableBellTower.Value && !string.IsNullOrWhiteSpace(BellFamily.Value))
+                    if (!FRCSharp.VF2ConfigManager.disableBrassMonolith.Value && !string.IsNullOrWhiteSpace(BellFamily.Value))
                     {
                         DirectorCard dc = GetDirectorCard(vanilla<CharacterSpawnCard>("Base/Bell/cscBell"));
                         dc.preventOverhead = true;
