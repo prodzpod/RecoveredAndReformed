@@ -60,6 +60,9 @@
 	  <Reference Include="FHCSharp">
 	    <HintPath>..\..\libs\FHCSharp-nstrip.dll</HintPath>
 	  </Reference>
+	  <Reference Include="GOTCE">
+	    <HintPath>..\..\libs\GOTCE-nstrip.dll</HintPath>
+	  </Reference>
 	  <Reference Include="GrooveSaladSpikestripContent">
 	    <HintPath>..\..\libs\GrooveSaladSpikestripContent-nstrip.dll</HintPath>
 	  </Reference>
@@ -68,6 +71,9 @@
 	  </Reference>
 	  <Reference Include="LegacyResourcesAPI">
 	    <HintPath>..\..\libs\LegacyResourcesAPI-nstrip.dll</HintPath>
+	  </Reference>
+	  <Reference Include="LunarConstruct">
+	    <HintPath>..\..\libs\LunarConstruct-nstrip.dll</HintPath>
 	  </Reference>
 	  <Reference Include="MMHOOK_RoR2">
 	    <HintPath>..\..\libs\MMHOOK_RoR2-nstrip.dll</HintPath>

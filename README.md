@@ -38,12 +38,16 @@ Every value is defaulted to what the original value was, unless stated otherwise
 * Removes Acid Larva family event. (Configurable)
 * Adds Iota and [Sigma Construct](https://thunderstore.io/package/SpikestripModding/Spikestrip2_0) to the Construct Family.
 * Adds [Coil Golem](https://thunderstore.io/package/PlasmaCore3/Forgotten_Relics) to the Golem Family.
+* Adds [Lunar Construct](https://thunderstore.io/package/HIFU/LunarConstruct/) to the Lunar Family.
 * New **Tar Family**: [Clay Men](https://thunderstore.io/package/Moffein/Clay_Men), Clay Templar, Clay Apothecary, Clay Dunestrider, [Lively Pot](https://thunderstore.io/package/SpikestripModding/Spikestrip2_0)
 * New **Wisp? Family**: Lesser Wisp, [Frost Wisp](https://thunderstore.io/package/PlasmaCore3/Forgotten_Relics), [Archaic Wisp](https://thunderstore.io/package/Moffein/Archaic_Wisp), [Ancient Wisp](https://thunderstore.io/package/Moffein/Ancient_Wisp)
-* New **Solus Family**: Alloy Vulture, Solus Probe, Solus Control Unit
-* New **Blind Family**: Blind Vermin, Blind Pest, Magma Worm, Overloading Worm
-* New **Bell Family**: Brass Contraption, [Brass Monolith](https://thunderstore.io/package/PlasmaCore3/Forgotten_Relics) (only added if Bell Tower is enabled)
+* New **One-Eyed Family**: Alpha Construct, Imp, Solus Probe, Stone Golem, Parent, Stone Titan, Solus Control Unit, Xi Construct, Iota Construct, Void Devastator, [Lunar Construct](https://thunderstore.io/package/HIFU/LunarConstruct/), [Providence](https://thunderstore.io/package/TheBestAssociatedLargelyLudicrousSillyheadGroup/Gamers_of_the_Cracked_Emoji/), Mithrix (only if [GOTCE](https://thunderstore.io/package/TheBestAssociatedLargelyLudicrousSillyheadGroup/Gamers_of_the_Cracked_Emoji/) is installed)
+* New **Blind Family**: Hermit Crab, Bighorn Bison, Blind Vermin, Blind Pest, Magma Worm, Overloading Worm, [Coil Golem](https://thunderstore.io/package/PlasmaCore3/Forgotten_Relics), [Living Suppressive Fire](https://thunderstore.io/package/TheBestAssociatedLargelyLudicrousSillyheadGroup/Gamers_of_the_Cracked_Emoji/), [Cracked Pest](https://thunderstore.io/package/TheBestAssociatedLargelyLudicrousSillyheadGroup/Gamers_of_the_Cracked_Emoji/), [Cracked Vermin](https://thunderstore.io/package/TheBestAssociatedLargelyLudicrousSillyheadGroup/Gamers_of_the_Cracked_Emoji/), [Gummy Beetle Queen](https://thunderstore.io/package/TheBestAssociatedLargelyLudicrousSillyheadGroup/Gamers_of_the_Cracked_Emoji/)
+* New **Bell Family**: Brass Contraption, [Brass Monolith](https://thunderstore.io/package/PlasmaCore3/Forgotten_Relics) (only added if Brass Monolith is enabled), [Living Suppressive Fire](https://thunderstore.io/package/TheBestAssociatedLargelyLudicrousSillyheadGroup/Gamers_of_the_Cracked_Emoji/)
 * Adds **Parent Family** (cut content).
+* [GOTCE](https://thunderstore.io/package/TheBestAssociatedLargelyLudicrousSillyheadGroup/Gamers_of_the_Cracked_Emoji/)-Specific Families:
+  * New **Balls Family**: Jellyfish, Solus Probe, Lunar Exploder, Ion Surger, The
+  * New **Voidling Family**: Voidlinglinglingling, Voidlinglingling, Voidlingling, Voidling
 * Construct Family Event is now also possible at Sky Meadow, [Fogbound Lagoon](https://thunderstore.io/package/JaceDaDorito/FogboundLagoon), [Forgotten Haven](https://thunderstore.io/package/PlasmaCore3/Forgotten_Relics), and Titanic Plains.
 * Lemurian Family Event is now also possible at [Dry Basin](https://thunderstore.io/package/PlasmaCore3/Forgotten_Relics).
 * Golem Family Event is now also possible at [Fogbound Lagoon](https://thunderstore.io/package/JaceDaDorito/FogboundLagoon), and [Forgotten Haven](https://thunderstore.io/package/PlasmaCore3/Forgotten_Relics).
@@ -67,6 +71,7 @@ Every value is defaulted to what the original value was, unless stated otherwise
 * **Anreol** for [Released from the Void](https://thunderstore.io/package/Anreol/ReleasedFromTheVoid), where the name for Iota Construct came from. If you want a different flavor of Iota Construct / Assassin that is more closer to how it was intended, check it out.
 
 ## Changelog
+- 1.1.0: Removed solus family, added one eye, balls, voidling family, added more monsters to blind family, bugfix with direseeker, LunarConstruct and GOTCE support
 - 1.0.6: PlasmaCore Stop Making Breaking Mod Changes Challenge
 - 1.0.5: Bugfix
 - 1.0.4: Bugfix
