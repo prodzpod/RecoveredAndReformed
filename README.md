@@ -71,6 +71,7 @@ Every value is defaulted to what the original value was, unless stated otherwise
 * **Anreol** for [Released from the Void](https://thunderstore.io/package/Anreol/ReleasedFromTheVoid), where the name for Iota Construct came from. If you want a different flavor of Iota Construct / Assassin that is more closer to how it was intended, check it out.
 
 ## Changelog
+- 1.1.1: Fixed Brass Monolith from [Forgotten Relics](https://thunderstore.io/package/PlasmaCore3/Forgotten_Relics), it spawns with RaR installed now
 - 1.1.0: Removed solus family, added one eye, balls, voidling family, added more monsters to blind family, bugfix with direseeker, LunarConstruct and GOTCE support
 - 1.0.6: PlasmaCore Stop Making Breaking Mod Changes Challenge
 - 1.0.5: Bugfix

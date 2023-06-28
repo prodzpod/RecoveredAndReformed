@@ -37,7 +37,7 @@ namespace RecoveredAndReformed
         public const string PluginGUID = PluginAuthor + "." + PluginName;
         public const string PluginAuthor = "prodzpod";
         public const string PluginName = "RecoveredAndReformed";
-        public const string PluginVersion = "1.1.0";
+        public const string PluginVersion = "1.1.1";
         public static ManualLogSource Log;
         public static PluginInfo pluginInfo;
         public static Harmony Harmony;
@@ -452,6 +452,8 @@ namespace RecoveredAndReformed
                 AddNewMonsterToStagesWhere(assassin2DCH, false, info => assassinlist.Contains(info.CustomStageName) || assassinlist.Contains(info.ToInternalStageName()));
                 RoR2Application.onLoad += () => RoR2Content.mixEnemyMonsterCards.AddCard(assassin2DCH);
             }
+            if (Mods("PlasmaCore.ForgottenRelics")) fixBT();
+            void fixBT() { FRCSharp.VF2ContentPackProvider.cscBrassMonolith.prefab = FRCSharp.VF2ContentPackProvider.masterMonsterBrassMonolith; } // guh
             if (Mods("PlasmaCore.ForgottenRelics", "JaceDaDorito.FBLStage")) addBTtoFBL();
             void addBTtoFBL() { if (!FRCSharp.VF2ConfigManager.disableBrassMonolith.Value) AddNewMonsterToStage(new() { Card = GetDirectorCard(FRCSharp.VF2ContentPackProvider.cscBrassMonolith), MonsterCategory = MonsterCategory.Champions }, false, DirectorAPI.Stage.Custom, "FBLScene"); }
 
@@ -520,11 +522,11 @@ namespace RecoveredAndReformed
                     {
                         DirectorCard dc = GetDirectorCard(vanilla<CharacterSpawnCard>("Base/Bell/cscBell"));
                         dc.preventOverhead = true;
-                        AddFamilyEvent("Bell", new() { new() { Card = dc, MonsterCategory = MonsterCategory.Minibosses } }, listify(BellFamily.Value)).AddCard(new()
+                        AddFamilyEvent("Bell", new() { new() { Card = dc, MonsterCategory = MonsterCategory.Minibosses }, new()
                         {
                             Card = GetDirectorCard(FRCSharp.VF2ContentPackProvider.cscBrassMonolith),
                             MonsterCategory = MonsterCategory.Minibosses
-                        });
+                        } }, listify(BellFamily.Value));
                     }
                 }
                 LanguageAPI.Add("FAMILY_BELL", "<style=cWorldEvent>[WARNING] The clock is ticking...</style>");
