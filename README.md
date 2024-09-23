@@ -3,22 +3,24 @@
 
 Adds enemies that were cut during development, and remixes it to be more fitting to the rest of the pack. Also adds a few more family events.
 
+<i>Spikestrip please return i need half of my content back</i>
+
 ## Cut Enemies
 * Adds **Iota Construct**, a boss construct monster.
-![Image](https://media.discordapp.net/attachments/515678821408571392/1082908308131819551/20230308150726_1.jpg)
+![Image](https://raw.githubusercontent.com/prodzpod/RecoveredAndReformed/master/1.jpg)
   * Its main attack is a powerful *laser* that will melt any opponent that stands in its way.
   * It creates a *shield* around itself that protects itself from faraway harm.
   * When it reaches a health threshold, It will *rise up* from the ground for a moment, retreating itself from harm. 
   * [Spikestrip](https://thunderstore.io/package/SpikestripModding/Spikestrip2_0) compat: Beware of the enemies it *summons!* Watch the ground...
 
 * Adds **Assassin**, a basic humanoid monster.
-![Image](https://media.discordapp.net/attachments/515678821408571392/1082908308433797191/20230308150854_1.jpg)
+![Image](https://raw.githubusercontent.com/prodzpod/RecoveredAndReformed/master/2.jpg)
   * Its ability to sneak up on foe is unmatched, to a point where it is *invisible* and *invulnerable* during its charge.
   * The melee attack of the assassin temporarily makes you *frail!* make sure to retreat if you're hit.
   * [AccurateEnemies](https://thunderstore.io/package/Moffein/AccurateEnemies) compat: the enemy is extra accurate with its ranged, *shuriken* hit.
 
 * Ability to spawn Elite variants of Magma Worm, Overloading Worm, Alloy Worship Unit, Aurellionite, Artifact Reliquary and [Direseeker](https://thunderstore.io/package/EnforcerGang/Direseeker/).
-![Image](https://media.discordapp.net/attachments/515678821408571392/1082919853695967314/20230308155635_1.jpg)
+![Image](https://raw.githubusercontent.com/prodzpod/RecoveredAndReformed/master/3.jpg)
 
 ### Configurability
 Every value is defaulted to what the original value was, unless stated otherwise.
@@ -45,6 +47,7 @@ Every value is defaulted to what the original value was, unless stated otherwise
 * New **Blind Family**: Hermit Crab, Bighorn Bison, Blind Vermin, Blind Pest, Magma Worm, Overloading Worm, [Coil Golem](https://thunderstore.io/package/PlasmaCore3/Forgotten_Relics), [Living Suppressive Fire](https://thunderstore.io/package/TheBestAssociatedLargelyLudicrousSillyheadGroup/Gamers_of_the_Cracked_Emoji/), [Cracked Pest](https://thunderstore.io/package/TheBestAssociatedLargelyLudicrousSillyheadGroup/Gamers_of_the_Cracked_Emoji/), [Cracked Vermin](https://thunderstore.io/package/TheBestAssociatedLargelyLudicrousSillyheadGroup/Gamers_of_the_Cracked_Emoji/), [Gummy Beetle Queen](https://thunderstore.io/package/TheBestAssociatedLargelyLudicrousSillyheadGroup/Gamers_of_the_Cracked_Emoji/)
 * New **Bell Family**: Brass Contraption, [Brass Monolith](https://thunderstore.io/package/PlasmaCore3/Forgotten_Relics) (only added if Brass Monolith is enabled), [Living Suppressive Fire](https://thunderstore.io/package/TheBestAssociatedLargelyLudicrousSillyheadGroup/Gamers_of_the_Cracked_Emoji/)
 * Adds **Parent Family** (cut content).
+* Adds **Mushroom Family** (cut content) if [RisingTides](https://thunderstore.io/package/TheMysticSword/RisingTides/) is installed.
 * [GOTCE](https://thunderstore.io/package/TheBestAssociatedLargelyLudicrousSillyheadGroup/Gamers_of_the_Cracked_Emoji/)-Specific Families:
   * New **Balls Family**: Jellyfish, Solus Probe, Lunar Exploder, Ion Surger, The
   * New **Voidling Family**: Voidlinglinglingling, Voidlinglingling, Voidlingling, Voidling
@@ -71,6 +74,8 @@ Every value is defaulted to what the original value was, unless stated otherwise
 * **Anreol** for [Released from the Void](https://thunderstore.io/package/Anreol/ReleasedFromTheVoid), where the name for Iota Construct came from. If you want a different flavor of Iota Construct / Assassin that is more closer to how it was intended, check it out.
 
 ## Changelog
+- 1.1.3: made to work in sots
+- 1.1.2: Added Mushroom family ([RisingTides](https://thunderstore.io/package/TheMysticSword/RisingTides/) support)
 - 1.1.1: Fixed Brass Monolith from [Forgotten Relics](https://thunderstore.io/package/PlasmaCore3/Forgotten_Relics), it spawns with RaR installed now
 - 1.1.0: Removed solus family, added one eye, balls, voidling family, added more monsters to blind family, bugfix with direseeker, LunarConstruct and GOTCE support
 - 1.0.6: PlasmaCore Stop Making Breaking Mod Changes Challenge

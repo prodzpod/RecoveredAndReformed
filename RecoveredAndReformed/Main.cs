@@ -32,12 +32,13 @@ namespace RecoveredAndReformed
     [BepInDependency("com.rob.Direseeker", BepInDependency.DependencyFlags.SoftDependency)]
     [BepInDependency("HIFU.LunarConstruct", BepInDependency.DependencyFlags.SoftDependency)]
     [BepInDependency("com.TheBestAssociatedLargelyLudicrousSillyheadGroup.GOTCE", BepInDependency.DependencyFlags.SoftDependency)]
+    [BepInDependency("com.themysticsword.risingtides", BepInDependency.DependencyFlags.SoftDependency)]
     public class Main : BaseUnityPlugin
     {
         public const string PluginGUID = PluginAuthor + "." + PluginName;
         public const string PluginAuthor = "prodzpod";
         public const string PluginName = "RecoveredAndReformed";
-        public const string PluginVersion = "1.1.1";
+        public const string PluginVersion = "1.1.3";
         public static ManualLogSource Log;
         public static PluginInfo pluginInfo;
         public static Harmony Harmony;
@@ -571,6 +572,14 @@ namespace RecoveredAndReformed
                 if (Mods("com.Moffein.ArchaicWisp")) addArchaicWisp();
                 void addArchaicWisp() => addManual(wispFamily, ArchaicWisp.ArchaicWispContent.ArchaicWispCard);
                 AddFamilyToStages(vanilla<FamilyDirectorCardCategorySelection>("Base/Common/dccsParentFamily"), new() { "itskymeadow", "skymeadow", "forgottenhaven", "slumberingsatellite", "artifactworld" });
+                RoR2Application.onLoad += () =>
+                {
+                    if (Mods("com.themysticsword.risingtides")) addMushroomFamily();
+                };
+                void addMushroomFamily() {
+                    addManual("dccsMushroomFamily", new() { Card = GetDirectorCard(MysticsRisky2Utils.BaseAssetTypes.BaseCharacterMaster.characterSpawnCards["RisingTides_MushSupporter"]), MonsterCategory = MonsterCategory.Minibosses });
+                    AddFamilyToStages(vanilla<FamilyDirectorCardCategorySelection>("Base/Common/dccsMushroomFamily"), new() { "skymeadow", "itskymeadow", "rootjungle", "drybasin", "goldshores", "FBLScene", "sulfurpools" });
+                }
                 AddFamilyToStages(vanilla<FamilyDirectorCardCategorySelection>("DLC1/Common/dccsConstructFamily"), new() { "itskymeadow", "skymeadow", "FBLScene", "forgottenhaven", "golemplains", "golemplains2" });
                 AddFamilyToStages(vanilla<FamilyDirectorCardCategorySelection>("Base/Common/dccsLemurianFamily"), new() { "drybasin", "goldshores" });
                 AddFamilyToStages(vanilla<FamilyDirectorCardCategorySelection>("Base/Common/dccsGolemFamily"), new() { "forgottenhaven" });
@@ -619,10 +628,10 @@ namespace RecoveredAndReformed
             }
             LanguageAPI.Add("FAMILY_BLIND", "<style=cWorldEvent>[WARNING] The sightless erupts from the ground...</style>");
 
-            On.RoR2.ClassicStageInfo.RebuildCards += (orig, self) =>
+            On.RoR2.ClassicStageInfo.RebuildCards += (orig, self, a, b) =>
             {
                 if (onRebuildCards != null) onRebuildCards(self);
-                orig(self);
+                orig(self, a, b);
             };
         }
 

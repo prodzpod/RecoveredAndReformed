@@ -1,6 +1,6 @@
 {
 	"name": "RecoveredAndReformed",
-	"version_number": "1.1.1",
+	"version_number": "1.1.3",
 	"website_url": "https://github.com/prodzpod/RecoveredAndReformed",
 	"description": "Brings back cut enemies and rebalances them. also does some family event stuff. Highly Configurable.",
 	"dependencies": [
