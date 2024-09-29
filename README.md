@@ -74,6 +74,7 @@ Every value is defaulted to what the original value was, unless stated otherwise
 * **Anreol** for [Released from the Void](https://thunderstore.io/package/Anreol/ReleasedFromTheVoid), where the name for Iota Construct came from. If you want a different flavor of Iota Construct / Assassin that is more closer to how it was intended, check it out.
 
 ## Changelog
+- 1.1.4: fixed iota construct following you beyond the teleporter
 - 1.1.3: made to work in sots
 - 1.1.2: Added Mushroom family ([RisingTides](https://thunderstore.io/package/TheMysticSword/RisingTides/) support)
 - 1.1.1: Fixed Brass Monolith from [Forgotten Relics](https://thunderstore.io/package/PlasmaCore3/Forgotten_Relics), it spawns with RaR installed now

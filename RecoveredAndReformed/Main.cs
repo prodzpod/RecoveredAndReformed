@@ -38,7 +38,7 @@ namespace RecoveredAndReformed
         public const string PluginGUID = PluginAuthor + "." + PluginName;
         public const string PluginAuthor = "prodzpod";
         public const string PluginName = "RecoveredAndReformed";
-        public const string PluginVersion = "1.1.3";
+        public const string PluginVersion = "1.1.4";
         public static ManualLogSource Log;
         public static PluginInfo pluginInfo;
         public static Harmony Harmony;
@@ -389,6 +389,7 @@ namespace RecoveredAndReformed
             });
 
             CharacterSpawnCard cscMajorConstruct = vanilla<CharacterSpawnCard>("DLC1/MajorAndMinorConstruct/cscMajorConstruct");
+            Destroy(cscMajorConstruct.prefab.GetComponent<SetDontDestroyOnLoad>());
             CharacterSpawnCard cscAssassin2 = vanilla<CharacterSpawnCard>("DLC1/Assassin2/cscAssassin2");
             CharacterSpawnCard cscMagmaWorm = vanilla<CharacterSpawnCard>("Base/MagmaWorm/cscMagmaWorm");
             CharacterSpawnCard cscOverloadingWorm = vanilla<CharacterSpawnCard>("Base/ElectricWorm/cscElectricWorm");
