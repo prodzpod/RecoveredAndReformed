@@ -31,6 +31,23 @@ namespace RecoveredAndReformed
             CharacterSpawnCard card = LegacyResourcesAPI.Load<CharacterSpawnCard>("SpawnCards/CharacterSpawnCards/cscMinorConstruct");
             if (Main.Mods("com.plasmacore.PlasmaCoreSpikestripContent") && Main.MajorConstructSpawnSigmaInstead.Value) card = slasma();
             static CharacterSpawnCard slasma() => PlasmaCoreSpikestripContent.Content.Monsters.SigmaConstruct.instance.CharacterSpawnCard;
+            if (Main.MajorConstructSpawnTheta.Value && Main.Mods("com.TeamSandswept.Sandswept")) spawnThetas(); 
+            void spawnThetas() => On.EntityStates.MajorConstruct.Spawn.OnEnter += (orig, self) =>
+            {
+                orig(self);
+                if (!NetworkServer.active) return;
+                Quaternion rot = Quaternion.AngleAxis(90f, Vector3.up);
+                Vector3 cur = self.transform.forward * 16f;
+                if (!spawnedConstructs.ContainsKey(self.characterBody)) spawnedConstructs.Add(self.characterBody, new());
+                for (int i = 0; i < 4; i++)
+                {
+                    Vector3 pos = cur + self.transform.position;
+                    GameObject obj = Sandswept.Enemies.ThetaConstruct.ThetaConstruct.Instance.card.spawnCard.DoSpawn(pos, Quaternion.Euler(self.transform.forward), new(Sandswept.Enemies.ThetaConstruct.ThetaConstruct.Instance.card.spawnCard, new() { position = pos, placementMode = DirectorPlacementRule.PlacementMode.Direct }, Run.instance.spawnRng) { teamIndexOverride = self.characterBody.teamComponent.teamIndex }).spawnedInstance;
+                    NetworkServer.Spawn(obj);
+                    spawnedConstructs[self.characterBody].Add(obj);
+                    cur = rot * cur;
+                }
+            };
             On.EntityStates.MajorConstruct.Weapon.FireLaser.OnEnter += (orig, self) =>
             {
                 orig(self);
@@ -49,7 +66,7 @@ namespace RecoveredAndReformed
                     CharacterBody body = hurtBox.healthComponent.body;
                     if (body && body.name == constructToSpawn) return;
                 }
-                Quaternion rot = Quaternion.AngleAxis(120f, Vector3.up);
+                Quaternion rot = Quaternion.AngleAxis(360f / Main.MajorConstructSpawnAmount.Value, Vector3.up);
                 Vector3 cur = self.transform.forward * 16f;
                 if (!spawnedConstructs.ContainsKey(self.characterBody)) spawnedConstructs.Add(self.characterBody, new());
                 for (int i = 0; i < Main.MajorConstructSpawnAmount.Value; i++)
@@ -117,6 +134,7 @@ namespace RecoveredAndReformed
                 orig(self); 
                 self.projectilePrefab.GetComponent<SphereCollider>().radius = 0.2f * Main.Assassin2ShurikenSize.Value;
             };
+            /*
             IL.EntityStates.GenericProjectileBaseState.FireProjectile += il =>
             {
                 ILCursor c = new(il);
@@ -133,6 +151,7 @@ namespace RecoveredAndReformed
                     }
                 });
             };
+            */
         }
     }   
 }

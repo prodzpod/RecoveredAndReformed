@@ -11,6 +11,7 @@ Adds enemies that were cut during development, and remixes it to be more fitting
   * Its main attack is a powerful *laser* that will melt any opponent that stands in its way.
   * It creates a *shield* around itself that protects itself from faraway harm.
   * When it reaches a health threshold, It will *rise up* from the ground for a moment, retreating itself from harm. 
+  * [Sandswept](https://thunderstore.io/package/SandsweptTeam/Sandswept/) compat: backup is here!
   * [Spikestrip](https://thunderstore.io/package/SpikestripModding/Spikestrip2_0) compat: Beware of the enemies it *summons!* Watch the ground...
 
 * Adds **Assassin**, a basic humanoid monster.
@@ -38,18 +39,19 @@ Every value is defaulted to what the original value was, unless stated otherwise
 ## Family Event
 * Configurable Family Event chance. (Default: 2%)
 * Removes Acid Larva family event. (Configurable)
-* Adds Iota and [Sigma Construct](https://thunderstore.io/package/SpikestripModding/Spikestrip2_0) to the Construct Family.
+* Adds Iota, [Theta, Delta, Gamma](https://thunderstore.io/package/SandsweptTeam/Sandswept/) and [Sigma Construct](https://thunderstore.io/package/SpikestripModding/Spikestrip2_0) to the Construct Family.
 * Adds [Coil Golem](https://thunderstore.io/package/PlasmaCore3/Forgotten_Relics) to the Golem Family.
 * Adds [Lunar Construct](https://thunderstore.io/package/HIFU/LunarConstruct/) to the Lunar Family.
+* Adds [Cannonball Jellyfish](https://thunderstore.io/package/SandsweptTeam/Sandswept/) to the Jellyfish Family.
 * New **Tar Family**: [Clay Men](https://thunderstore.io/package/Moffein/Clay_Men), Clay Templar, Clay Apothecary, Clay Dunestrider, [Lively Pot](https://thunderstore.io/package/SpikestripModding/Spikestrip2_0)
 * New **Wisp? Family**: Lesser Wisp, [Frost Wisp](https://thunderstore.io/package/PlasmaCore3/Forgotten_Relics), [Archaic Wisp](https://thunderstore.io/package/Moffein/Archaic_Wisp), [Ancient Wisp](https://thunderstore.io/package/Moffein/Ancient_Wisp)
-* New **One-Eyed Family**: Alpha Construct, Imp, Solus Probe, Stone Golem, Parent, Stone Titan, Solus Control Unit, Xi Construct, Iota Construct, Void Devastator, [Lunar Construct](https://thunderstore.io/package/HIFU/LunarConstruct/), [Providence](https://thunderstore.io/package/TheBestAssociatedLargelyLudicrousSillyheadGroup/Gamers_of_the_Cracked_Emoji/), Mithrix (only if [GOTCE](https://thunderstore.io/package/TheBestAssociatedLargelyLudicrousSillyheadGroup/Gamers_of_the_Cracked_Emoji/) is installed)
+* New **One-Eyed Family**: Alpha Construct, Imp, Solus Probe, Stone Golem, Parent, Stone Titan, Solus Control Unit, Xi Construct, Iota Construct, Void Devastator, [Lunar Construct](https://thunderstore.io/package/HIFU/LunarConstruct/), [Providence](https://thunderstore.io/package/TheBestAssociatedLargelyLudicrousSillyheadGroup/Gamers_of_the_Cracked_Emoji/), Mithrix (only if [GOTCE](https://thunderstore.io/package/TheBestAssociatedLargelyLudicrousSillyheadGroup/Gamers_of_the_Cracked_Emoji/) is installed), [Theta Construct](https://thunderstore.io/package/SandsweptTeam/Sandswept/), [Delta Construct](https://thunderstore.io/package/SandsweptTeam/Sandswept/)
 * New **Blind Family**: Hermit Crab, Bighorn Bison, Blind Vermin, Blind Pest, Magma Worm, Overloading Worm, [Coil Golem](https://thunderstore.io/package/PlasmaCore3/Forgotten_Relics), [Living Suppressive Fire](https://thunderstore.io/package/TheBestAssociatedLargelyLudicrousSillyheadGroup/Gamers_of_the_Cracked_Emoji/), [Cracked Pest](https://thunderstore.io/package/TheBestAssociatedLargelyLudicrousSillyheadGroup/Gamers_of_the_Cracked_Emoji/), [Cracked Vermin](https://thunderstore.io/package/TheBestAssociatedLargelyLudicrousSillyheadGroup/Gamers_of_the_Cracked_Emoji/), [Gummy Beetle Queen](https://thunderstore.io/package/TheBestAssociatedLargelyLudicrousSillyheadGroup/Gamers_of_the_Cracked_Emoji/)
 * New **Bell Family**: Brass Contraption, [Brass Monolith](https://thunderstore.io/package/PlasmaCore3/Forgotten_Relics) (only added if Brass Monolith is enabled), [Living Suppressive Fire](https://thunderstore.io/package/TheBestAssociatedLargelyLudicrousSillyheadGroup/Gamers_of_the_Cracked_Emoji/)
 * Adds **Parent Family** (cut content).
 * Adds **Mushroom Family** (cut content) if [RisingTides](https://thunderstore.io/package/TheMysticSword/RisingTides/) is installed.
 * [GOTCE](https://thunderstore.io/package/TheBestAssociatedLargelyLudicrousSillyheadGroup/Gamers_of_the_Cracked_Emoji/)-Specific Families:
-  * New **Balls Family**: Jellyfish, Solus Probe, Lunar Exploder, Ion Surger, The
+  * New **Balls Family**: Jellyfish, Solus Probe, Lunar Exploder, Ion Surger, The, [Cannonball Jellyfish](https://thunderstore.io/package/SandsweptTeam/Sandswept/)
   * New **Voidling Family**: Voidlinglinglingling, Voidlinglingling, Voidlingling, Voidling
 * Construct Family Event is now also possible at Sky Meadow, [Fogbound Lagoon](https://thunderstore.io/package/JaceDaDorito/FogboundLagoon), [Forgotten Haven](https://thunderstore.io/package/PlasmaCore3/Forgotten_Relics), and Titanic Plains.
 * Lemurian Family Event is now also possible at [Dry Basin](https://thunderstore.io/package/PlasmaCore3/Forgotten_Relics).
@@ -74,6 +76,7 @@ Every value is defaulted to what the original value was, unless stated otherwise
 * **Anreol** for [Released from the Void](https://thunderstore.io/package/Anreol/ReleasedFromTheVoid), where the name for Iota Construct came from. If you want a different flavor of Iota Construct / Assassin that is more closer to how it was intended, check it out.
 
 ## Changelog
+- 1.1.5: fixed for sots 2.0 & sandswept compat
 - 1.1.4: fixed iota construct following you beyond the teleporter
 - 1.1.3: made to work in sots
 - 1.1.2: Added Mushroom family ([RisingTides](https://thunderstore.io/package/TheMysticSword/RisingTides/) support)

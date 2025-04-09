@@ -22,9 +22,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Reference Include="AccurateEnemies">
-	    <HintPath>..\..\libs\AccurateEnemies-nstrip.dll</HintPath>
-	  </Reference>
 	  <Reference Include="Aetherium">
 	    <HintPath>..\..\libs\Aetherium-nstrip.dll</HintPath>
 	  </Reference>
@@ -105,6 +102,9 @@
 	  </Reference>
 	  <Reference Include="RisingTides">
 	    <HintPath>..\..\libs\RisingTides-nstrip.dll</HintPath>
+	  </Reference>
+	  <Reference Include="Sandswept">
+	    <HintPath>..\..\libs\Sandswept-nstrip.dll</HintPath>
 	  </Reference>
 	  <Reference Include="ShrineOfRepair">
 	    <HintPath>..\..\libs\ShrineOfRepair-nstrip.dll</HintPath>

@@ -33,12 +33,13 @@ namespace RecoveredAndReformed
     [BepInDependency("HIFU.LunarConstruct", BepInDependency.DependencyFlags.SoftDependency)]
     [BepInDependency("com.TheBestAssociatedLargelyLudicrousSillyheadGroup.GOTCE", BepInDependency.DependencyFlags.SoftDependency)]
     [BepInDependency("com.themysticsword.risingtides", BepInDependency.DependencyFlags.SoftDependency)]
+    [BepInDependency("com.TeamSandswept.Sandswept", BepInDependency.DependencyFlags.SoftDependency)]
     public class Main : BaseUnityPlugin
     {
         public const string PluginGUID = PluginAuthor + "." + PluginName;
         public const string PluginAuthor = "prodzpod";
         public const string PluginName = "RecoveredAndReformed";
-        public const string PluginVersion = "1.1.4";
+        public const string PluginVersion = "1.1.5";
         public static ManualLogSource Log;
         public static PluginInfo pluginInfo;
         public static Harmony Harmony;
@@ -122,6 +123,7 @@ namespace RecoveredAndReformed
         public static ConfigEntry<float> MajorConstructDeathTimer;
         public static ConfigEntry<int> MajorConstructSpawnAmount;
         public static ConfigEntry<bool> MajorConstructSpawnSigmaInstead;
+        public static ConfigEntry<bool> MajorConstructSpawnTheta;
         public static ConfigEntry<float> MajorConstructBeamDistance;
         public static ConfigEntry<float> MajorConstructAimSpeed;
         public static ConfigEntry<float> Assassin2InvisDuration;
@@ -244,6 +246,7 @@ namespace RecoveredAndReformed
             MajorConstructDeathTimer = Config.Bind("Iota Construct", "Death Timer", 5f, "Amount of seconds to show death animation for");
             MajorConstructSpawnAmount = Config.Bind("Iota Construct", "Spawn Amount", 3, "Amount of enemies to spawn in pillar raise phase");
             MajorConstructSpawnSigmaInstead = Config.Bind("Iota Construct", "Spawn Sigma Constructs", true, "Spikestrip Compat");
+            MajorConstructSpawnTheta = Config.Bind("Iota Construct", "Spawn Theta Constructs", true, "Sandswept Compat");
             MajorConstructBeamDistance = Config.Bind("Iota Construct", "Beam Distance", 150f, "Used to be 999");
             MajorConstructAimSpeed = Config.Bind("Iota Construct", "Aim Speed", 10f, "Strafe around!");
 
@@ -469,13 +472,13 @@ namespace RecoveredAndReformed
             IL.RoR2.ClassicStageInfo.RebuildCards += il =>
             {
                 ILCursor c = new(il);
-                c.GotoNext(MoveType.AfterLabel, x => x.MatchLdloc(7), x => x.MatchBrfalse(out _));
+                c.GotoNext(MoveType.AfterLabel, x => x.MatchLdloc(4), x => x.MatchBrfalse(out _));
                 c.Emit(OpCodes.Ldarg_0);
                 c.EmitDelegate<Action<ClassicStageInfo>>(self => HandleDccs(self.modifiableMonsterCategories));
             };
             void HandleDccs(DirectorCardCategorySelection dccs)
             {
-                foreach (var k in manualDCCSAdd.Keys) if (dccs.name.Contains(k)) foreach (var v in manualDCCSAdd[k])
+                if (dccs) foreach (var k in manualDCCSAdd.Keys) if (dccs.name.Contains(k)) foreach (var v in manualDCCSAdd[k])
                 {
                     Log.LogDebug($"Adding {v.Card.spawnCard.name} to {k}");
                     if (!dccs.categories.Any(x => x.name == GetVanillaMonsterCategoryName(v.MonsterCategory))) dccs.AddCategory(GetVanillaMonsterCategoryName(v.MonsterCategory), 1);
@@ -491,6 +494,16 @@ namespace RecoveredAndReformed
                 {
                     addManual("dccsLunarFamily", LunarConstruct.Enemies.LunarConstruct.Instance.cardHolder);
                     addManual("dccsOneEyeFamily", LunarConstruct.Enemies.LunarConstruct.Instance.cardHolder);
+                }
+                if (Mods("com.TeamSandswept.Sandswept")) addSandswept();
+                void addSandswept()
+                {
+                    addManual("dccsJellyFamily", new() { Card = Sandswept.Enemies.CannonballJellyfish.CannonballJellyfish.Instance.card, MonsterCategory = Sandswept.Enemies.CannonballJellyfish.CannonballJellyfish.Instance.cat });
+                    addManual("dccsConstructFamily", new() { Card = Sandswept.Enemies.ThetaConstruct.ThetaConstruct.Instance.card, MonsterCategory = Sandswept.Enemies.ThetaConstruct.ThetaConstruct.Instance.cat });
+                    addManual("dccsOneEyeFamily", new() { Card = Sandswept.Enemies.ThetaConstruct.ThetaConstruct.Instance.card, MonsterCategory = Sandswept.Enemies.ThetaConstruct.ThetaConstruct.Instance.cat });
+                    addManual("dccsConstructFamily", new() { Card = Sandswept.Enemies.GammaConstruct.GammaConstruct.Instance.card, MonsterCategory = Sandswept.Enemies.GammaConstruct.GammaConstruct.Instance.cat });
+                    addManual("dccsConstructFamily", new() { Card = Sandswept.Enemies.DeltaConstruct.DeltaConstruct.Instance.card, MonsterCategory = Sandswept.Enemies.DeltaConstruct.DeltaConstruct.Instance.cat });
+                    addManual("dccsOneEyeFamily", new() { Card = Sandswept.Enemies.DeltaConstruct.DeltaConstruct.Instance.card, MonsterCategory = Sandswept.Enemies.DeltaConstruct.DeltaConstruct.Instance.cat });
                 }
                 if (Mods("com.plasmacore.PlasmaCoreSpikestripContent")) addSigma();
                 void addSigma()
