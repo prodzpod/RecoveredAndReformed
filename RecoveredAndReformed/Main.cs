@@ -34,12 +34,14 @@ namespace RecoveredAndReformed
     [BepInDependency("com.TheBestAssociatedLargelyLudicrousSillyheadGroup.GOTCE", BepInDependency.DependencyFlags.SoftDependency)]
     [BepInDependency("com.themysticsword.risingtides", BepInDependency.DependencyFlags.SoftDependency)]
     [BepInDependency("com.TeamSandswept.Sandswept", BepInDependency.DependencyFlags.SoftDependency)]
+    [BepInDependency("com.TeamMoonstorm", BepInDependency.DependencyFlags.SoftDependency)]
+    [BepInDependency("com.Viliger.EnemiesReturns", BepInDependency.DependencyFlags.SoftDependency)]
     public class Main : BaseUnityPlugin
     {
         public const string PluginGUID = PluginAuthor + "." + PluginName;
         public const string PluginAuthor = "prodzpod";
         public const string PluginName = "RecoveredAndReformed";
-        public const string PluginVersion = "1.1.5";
+        public const string PluginVersion = "1.2.0";
         public static ManualLogSource Log;
         public static PluginInfo pluginInfo;
         public static Harmony Harmony;
@@ -165,8 +167,8 @@ namespace RecoveredAndReformed
             Harmony = new Harmony(PluginGUID);
             Config = new ConfigFile(System.IO.Path.Combine(Paths.ConfigPath, PluginGUID + ".cfg"), true);
 
-            MajorConstructSpawn = Config.Bind("Spawns", "Iota Construct Spawn Scenes", "skymeadow, itskymeadow, sulfurpools, itgolemplains, golemplains, golemplains2, forgottenhaven, FBLScene", "List of scene names, separated by comma. By default, where Xi Construct spawns.");
-            Assassin2Spawn = Config.Bind("Spawns", "Assassin Spawn Scenes", "blackbeach, blackbeach2, rootjungle, arena, shipgraveyard, wispgraveyard, itancientloft, ancientloft", "List of scene names, separated by comma.");
+            MajorConstructSpawn = Config.Bind("Spawns", "Iota Construct Spawn Scenes", "skymeadow, itskymeadow, sulfurpools, itgolemplains, golemplains, golemplains2, forgottenhaven, FBLScene, village, villagenight, ironalluvium, ironalluvium2, conduitcanyon, repurposedcrater, helminthroost, slumberingsatellite", "List of scene names, separated by comma. By default, where Xi Construct spawns.");
+            Assassin2Spawn = Config.Bind("Spawns", "Assassin Spawn Scenes", "blackbeach, blackbeach2, rootjungle, arena, shipgraveyard, wispgraveyard, itancientloft, ancientloft, lakes, lakesnight, lemuriantemple, habitat, habitatfall", "List of scene names, separated by comma.");
             MajorConstructMinStage = Config.Bind("Spawns", "Iota Construct Minimum Stage", 4, "Starting stage.");
             Assassin2MinStage = Config.Bind("Spawns", "Assassin Minimum Stage", 3, "Starting stage.");
             EliteMagmaWorm = Config.Bind("Spawns", "Enable Elite Magma Worms", false, "If true, allows spawning of elite magma worms.");
@@ -272,13 +274,13 @@ namespace RecoveredAndReformed
 
             FamilyEventChance = Config.Bind("Family Event", "Family Event Chance", 0.02f, "");
             EnableFamilyChange = Config.Bind("Family Event", "Enable Family Compats", true, "Enable all family event related compats.");
-            TarFamily = Config.Bind("Family Event", "Enable Tar Family", "ancientloft, itancientloft, wispgraveyard, sulfurpools, goolake, itgoolake, drybasin", "Custom family event. List of scenes, separated by comma. blank to disable.");
-            AltWispFamily = Config.Bind("Family Event", "Enable Alt Wisp Family", "ancientloft, itancientloft, frozenwall, snowyforest, forgottenhaven, FBLScene", "Custom family event. List of scenes, separated by comma. blank to disable. otherwise wisp enemies will be added to normal wisp group.");
-            BallsFamily = Config.Bind("Family Event", "Enable Balls Family", "FBLScene, ancientloft, blackbeach, blackbeach2, dampcavesimple, drybasin, foggyswamp, forgottenhaven, frozenwall, goldshores, golemplains, golemplains2, goolake, itancientloft, itdampcave, itfrozenwall, itgolemplains, itgoolake, itmoon, itskymeadow, moon, moon2, rootjungle, shipgraveyard, skymeadow, slumberingsatellite, snowyforest, sulfurpools, wispgraveyard", "(GOTCE ONLY) Custom family event. List of scenes, separated by comma. blank to disable.");
-            VoidlingFamily = Config.Bind("Family Event", "Enable Voidling Family", "snowyforest, sulfurpools, rootjungle, ancientloft, itancientloft, slumberingsatellite, FBLScene, forgottenhaven, drybasin", "(GOTCE ONLY) Custom family event. List of scenes, separated by comma. blank to disable.");
-            OneEyeFamily = Config.Bind("Family Event", "Enable One Eye Family", "snowyforest, foggyswamp, ancientloft, sulfurpools, dampcavesimple, drybasin, slumberingsatellite, skymeadow, itskymeadow, itancientloft, itdampcave", "Custom family event. List of scenes, separated by comma. blank to disable.");
-            BlindFamily = Config.Bind("Family Event", "Enable Blind Family", "ancientloft, itancientloft, itfrozenwall, frozenwall, snowyforest, FBLScene", "Custom family event. List of scenes, separated by comma. blank to disable.");
-            BellFamily = Config.Bind("Family Event", "Enable Bell Family", "itdampcave, dampcavesimple, shipgraveyard, itskymeadow, skymeadow, foggyswamp, FBLScene", "Custom family event. List of scenes, separated by comma. blank to disable. disables if BT is not loaded.");
+            TarFamily = Config.Bind("Family Event", "Enable Tar Family", "ancientloft, itancientloft, wispgraveyard, sulfurpools, goolake, itgoolake, drybasin, repurposedcrater", "Custom family event. List of scenes, separated by comma. blank to disable.");
+            AltWispFamily = Config.Bind("Family Event", "Enable Alt Wisp Family", "ancientloft, itancientloft, frozenwall, snowyforest, forgottenhaven, FBLScene, nest, ironalluvium, ironalluvium2, helminthroost", "Custom family event. List of scenes, separated by comma. blank to disable. otherwise wisp enemies will be added to normal wisp group.");
+            BallsFamily = Config.Bind("Family Event", "Enable Balls Family", "FBLScene, ancientloft, blackbeach, blackbeach2, dampcavesimple, drybasin, foggyswamp, forgottenhaven, frozenwall, goldshores, golemplains, golemplains2, goolake, itancientloft, itdampcave, itfrozenwall, itgolemplains, itgoolake, itmoon, itskymeadow, moon, moon2, rootjungle, shipgraveyard, skymeadow, slumberingsatellite, snowyforest, sulfurpools, wispgraveyard, lakes, lakesnight, village, villagenight, lemuriantemple, habitat, habitatfall, nest, ironalluvium, ironalluvium2, repurposedcrater, helminthroost, conduitcanyon", "(GOTCE ONLY) Custom family event. List of scenes, separated by comma. blank to disable.");
+            VoidlingFamily = Config.Bind("Family Event", "Enable Voidling Family", "snowyforest, sulfurpools, rootjungle, ancientloft, itancientloft, slumberingsatellite, FBLScene, forgottenhaven, drybasin, nest, village, villagenight, lakesnight, repurposedcrater", "(GOTCE ONLY) Custom family event. List of scenes, separated by comma. blank to disable.");
+            OneEyeFamily = Config.Bind("Family Event", "Enable One Eye Family", "snowyforest, foggyswamp, ancientloft, sulfurpools, dampcavesimple, drybasin, slumberingsatellite, skymeadow, itskymeadow, itancientloft, itdampcave, nest, helminthroost, lemuriantemple", "Custom family event. List of scenes, separated by comma. blank to disable.");
+            BlindFamily = Config.Bind("Family Event", "Enable Blind Family", "ancientloft, itancientloft, itfrozenwall, frozenwall, snowyforest, FBLScene, nest, ironalluvium, ironalluvium2", "Custom family event. List of scenes, separated by comma. blank to disable.");
+            BellFamily = Config.Bind("Family Event", "Enable Bell Family", "itdampcave, dampcavesimple, shipgraveyard, itskymeadow, skymeadow, foggyswamp, FBLScene, nest, ironalluvium, ironalluvium2, repurposedcrater, lemuriantemple", "Custom family event. List of scenes, separated by comma. blank to disable. disables if BT is not loaded.");
             RemoveLarvaFamily = Config.Bind("Family Event", "Remove Larva Family Event", true, "jesus lol");
 
             LarvaDetonateSelfDamage = Config.Bind("Sneaky Rebalance", "Acid Larva Detonation Self Damage Fraction", 1f, "What if larvas died on first leap (no way), Default: 0.25");
@@ -489,6 +491,22 @@ namespace RecoveredAndReformed
             string wispFamily = string.IsNullOrWhiteSpace(AltWispFamily.Value) ? "dccsWispFamily" : "dccsAltWispFamily";
             if (EnableFamilyChange.Value)
             {
+                if (Mods("com.Viliger.EnemiesReturns")) addEnemiesReturns(); 
+                void addEnemiesReturns()
+                {
+                    addManual("dccsGolemFamily", new() { Card = GetDirectorCard(EnemiesReturns.Enemies.Colossus.ColossusBody.SpawnCards.cscColossusDefault), MonsterCategory = MonsterCategory.Champions });
+                    addManual("dccsGolemFamilySandy", new() { Card = GetDirectorCard(EnemiesReturns.Enemies.Colossus.ColossusBody.SpawnCards.cscColossusSandy), MonsterCategory = MonsterCategory.Champions });
+                    addManual("dccsGolemFamilySnowy", new() { Card = GetDirectorCard(EnemiesReturns.Enemies.Colossus.ColossusBody.SpawnCards.cscColossusSnowy), MonsterCategory = MonsterCategory.Champions });
+                    addManual("dccsGolemFamilyNature", new() { Card = GetDirectorCard(EnemiesReturns.Enemies.Colossus.ColossusBody.SpawnCards.cscColossusGrassy), MonsterCategory = MonsterCategory.Champions });
+                    addManual("dccsGolemFamily", new() { Card = GetDirectorCard(EnemiesReturns.Enemies.Swift.SwiftBody.SpawnCards.cscSwiftDefault), MonsterCategory = MonsterCategory.BasicMonsters });
+                    addManual("dccsGolemFamilySandy", new() { Card = GetDirectorCard(EnemiesReturns.Enemies.Swift.SwiftBody.SpawnCards.cscSwiftDefault), MonsterCategory = MonsterCategory.BasicMonsters });
+                    addManual("dccsGolemFamilySnowy", new() { Card = GetDirectorCard(EnemiesReturns.Enemies.Swift.SwiftBody.SpawnCards.cscSwiftDefault), MonsterCategory = MonsterCategory.BasicMonsters });
+                    addManual("dccsGolemFamilyNature", new() { Card = GetDirectorCard(EnemiesReturns.Enemies.Swift.SwiftBody.SpawnCards.cscSwiftDefault), MonsterCategory = MonsterCategory.BasicMonsters });
+                    addManual("dccsBeetleFamily", new() { Card = GetDirectorCard(EnemiesReturns.Enemies.Spitter.SpitterBody.SpawnCards.cscSpitterDefault), MonsterCategory = MonsterCategory.BasicMonsters });
+                    addManual("dccsBeetleFamilySulfur", new() { Card = GetDirectorCard(EnemiesReturns.Enemies.Spitter.SpitterBody.SpawnCards.cscSpitterSulfur), MonsterCategory = MonsterCategory.BasicMonsters });
+                    addManual("dccsBeetleFamily", new() { Card = GetDirectorCard(EnemiesReturns.Enemies.SandCrab.SandCrabBody.SpawnCards.cscSandCrabDefault), MonsterCategory = MonsterCategory.BasicMonsters });
+                    addManual("dccsBeetleFamilySulfur", new() { Card = GetDirectorCard(EnemiesReturns.Enemies.SandCrab.SandCrabBody.SpawnCards.cscSandCrabSulfur), MonsterCategory = MonsterCategory.BasicMonsters });
+                }
                 if (Mods("HIFU.LunarConstruct")) addLunarConstruct();
                 void addLunarConstruct()
                 {
@@ -530,6 +548,9 @@ namespace RecoveredAndReformed
                         DirectorCard dc = GetDirectorCard(FRCSharp.VF2ContentPackProvider.cscCoilGolem);
                         dc.spawnDistance = DirectorCore.MonsterSpawnDistance.Far;
                         addManual("dccsGolemFamily", new() { Card = dc, MonsterCategory = MonsterCategory.Minibosses });
+                        addManual("dccsGolemFamilySandy", new() { Card = dc, MonsterCategory = MonsterCategory.Minibosses });
+                        addManual("dccsGolemFamilySnowy", new() { Card = dc, MonsterCategory = MonsterCategory.Minibosses });
+                        addManual("dccsGolemFamilyNature", new() { Card = dc, MonsterCategory = MonsterCategory.Minibosses });
                         addManual("dccsBlindFamily", new() { Card = dc, MonsterCategory = MonsterCategory.Minibosses });
                         addManual("fdccsGolemSandy", new() { Card = dc, MonsterCategory = MonsterCategory.Minibosses });
                     }
@@ -586,13 +607,17 @@ namespace RecoveredAndReformed
                 if (Mods("com.Moffein.ArchaicWisp")) addArchaicWisp();
                 void addArchaicWisp() => addManual(wispFamily, ArchaicWisp.ArchaicWispContent.ArchaicWispCard);
                 AddFamilyToStages(vanilla<FamilyDirectorCardCategorySelection>("Base/Common/dccsParentFamily"), new() { "itskymeadow", "skymeadow", "forgottenhaven", "slumberingsatellite", "artifactworld" });
-                RoR2Application.onLoad += () =>
-                {
-                    if (Mods("com.themysticsword.risingtides")) addMushroomFamily();
-                };
-                void addMushroomFamily() {
-                    addManual("dccsMushroomFamily", new() { Card = GetDirectorCard(MysticsRisky2Utils.BaseAssetTypes.BaseCharacterMaster.characterSpawnCards["RisingTides_MushSupporter"]), MonsterCategory = MonsterCategory.Minibosses });
+                RoR2Application.onLoad += () => {
+                    if (Mods("com.themysticsword.risingtides")) addMotherMushrum();
+                    if (Mods("com.TeamMoonstorm")) addRushrum();
                     AddFamilyToStages(vanilla<FamilyDirectorCardCategorySelection>("Base/Common/dccsMushroomFamily"), new() { "skymeadow", "itskymeadow", "rootjungle", "drybasin", "goldshores", "FBLScene", "sulfurpools" });
+                };
+                void addMotherMushrum() { addManual("dccsMushroomFamily", new() { Card = GetDirectorCard(MysticsRisky2Utils.BaseAssetTypes.BaseCharacterMaster.characterSpawnCards["RisingTides_MushSupporter"]), MonsterCategory = MonsterCategory.Minibosses }); }
+                void addRushrum()
+                {
+                    var asset = SS2.SS2Assets.LoadAssetAsync<SS2.MonsterAssetCollection>("acRunshroom", SS2.SS2Bundle.Monsters).Asset;
+                    if (asset == null) return; 
+                    addManual("dccsMushroomFamily", new() { Card = GetDirectorCard(asset.monsterCardProvider.serializedCardPairs[0].card.spawnCard.Asset as CharacterSpawnCard), MonsterCategory = MonsterCategory.BasicMonsters }); 
                 }
                 AddFamilyToStages(vanilla<FamilyDirectorCardCategorySelection>("DLC1/Common/dccsConstructFamily"), new() { "itskymeadow", "skymeadow", "FBLScene", "forgottenhaven", "golemplains", "golemplains2" });
                 AddFamilyToStages(vanilla<FamilyDirectorCardCategorySelection>("Base/Common/dccsLemurianFamily"), new() { "drybasin", "goldshores" });
@@ -606,6 +631,12 @@ namespace RecoveredAndReformed
                 new() { Card = GetDirectorCard(vanilla<CharacterSpawnCard>("Base/ClayBruiser/cscClayBruiser")), MonsterCategory = MonsterCategory.Minibosses },
                 new() { Card = GetDirectorCard(vanilla<CharacterSpawnCard>("DLC1/ClayGrenadier/cscClayGrenadier")), MonsterCategory = MonsterCategory.Minibosses }
             }, listify(TarFamily.Value));
+            if (Mods("com.TeamMoonstorm")) addClaymonger();
+            void addClaymonger() {
+                var asset = SS2.SS2Assets.LoadAssetAsync<SS2.MonsterAssetCollection>("acClayMonger", SS2.SS2Bundle.Indev).Asset;
+                if (asset == null) return;
+                addManual("dccsTarFamily", new() { Card = GetDirectorCard(asset.monsterCardProvider.serializedCardPairs[0].card.spawnCard.Asset as CharacterSpawnCard), MonsterCategory = MonsterCategory.BasicMonsters }); 
+            }
             LanguageAPI.Add("FAMILY_TAR", "<style=cWorldEvent>[WARNING] The ground oozes with tar...</style>");
             if (!string.IsNullOrWhiteSpace(AltWispFamily.Value)) AddFamilyEvent("AltWisp", new() 
             { 
@@ -622,7 +653,13 @@ namespace RecoveredAndReformed
                 new() { Card = GetDirectorCard(vanilla<CharacterSpawnCard>("Base/Titan/cscTitanGolemPlains")), MonsterCategory = MonsterCategory.Champions },
                 new() { Card = GetDirectorCard(vanilla<CharacterSpawnCard>("Base/RoboBallBoss/cscRoboBallBoss")), MonsterCategory = MonsterCategory.Champions },
                 new() { Card = GetDirectorCard(vanilla<CharacterSpawnCard>("DLC1/MajorAndMinorConstruct/cscMegaConstruct")), MonsterCategory = MonsterCategory.Champions },
-                new() { Card = GetDirectorCard(vanilla<CharacterSpawnCard>("DLC1/VoidMegaCrab/cscVoidMegaCrab")), MonsterCategory = MonsterCategory.Champions }
+                new() { Card = GetDirectorCard(vanilla<CharacterSpawnCard>("DLC1/VoidMegaCrab/cscVoidMegaCrab")), MonsterCategory = MonsterCategory.Champions },
+                new() { Card = GetDirectorCard(vanilla<CharacterSpawnCard>("DLC3/ExtractorUnit/cscExtractorUnit")), MonsterCategory = MonsterCategory.BasicMonsters },
+                new() { Card = GetDirectorCard(vanilla<CharacterSpawnCard>("DLC3/WorkerUnit/cscWorkerUnit")), MonsterCategory = MonsterCategory.BasicMonsters },
+                new() { Card = GetDirectorCard(vanilla<CharacterSpawnCard>("DLC3/Tanker/cscTanker")), MonsterCategory = MonsterCategory.BasicMonsters },
+                new() { Card = GetDirectorCard(vanilla<CharacterSpawnCard>("DLC3/DefectiveUnit/cscDefectiveUnit")), MonsterCategory = MonsterCategory.Minibosses },
+                new() { Card = GetDirectorCard(vanilla<CharacterSpawnCard>("DLC3/IronHauler/cscIronHauler")), MonsterCategory = MonsterCategory.Minibosses },
+                new() { Card = GetDirectorCard(vanilla<CharacterSpawnCard>("DLC3/SolusAmalgamator/cscSolusAmalgamator")), MonsterCategory = MonsterCategory.Champions }
             }, listify(OneEyeFamily.Value));
             LanguageAPI.Add("FAMILY_ONEEYE", "<style=cWorldEvent>[WARNING] Hungering gaze focuses around you...</style>");
             if (!string.IsNullOrWhiteSpace(BlindFamily.Value)) {
@@ -636,6 +673,8 @@ namespace RecoveredAndReformed
                     new() { Card = GetDirectorCard(vanilla<CharacterSpawnCard>("Base/HermitCrab/cscHermitCrab")), MonsterCategory = MonsterCategory.BasicMonsters },
                     new() { Card = GetDirectorCard(vanilla<CharacterSpawnCard>("DLC1/FlyingVermin/cscFlyingVermin")), MonsterCategory = MonsterCategory.BasicMonsters },
                     new() { Card = GetDirectorCard(vanilla<CharacterSpawnCard>("Base/Bison/cscBison")), MonsterCategory = MonsterCategory.Minibosses },
+                    new() { Card = GetDirectorCard(vanilla<CharacterSpawnCard>("DLC2/Scorchling/cscScorchling")), MonsterCategory = MonsterCategory.Minibosses },
+                    new() { Card = GetDirectorCard(vanilla<CharacterSpawnCard>("DLC3/MinePod/cscMinePod")), MonsterCategory = MonsterCategory.BasicMonsters },
                     new() { Card = magmaWormDC, MonsterCategory = MonsterCategory.Champions },
                     new() { Card = electricWormDC, MonsterCategory = MonsterCategory.Champions }
                 }, listify(BlindFamily.Value));

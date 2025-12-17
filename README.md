@@ -76,6 +76,8 @@ Every value is defaulted to what the original value was, unless stated otherwise
 * **Anreol** for [Released from the Void](https://thunderstore.io/package/Anreol/ReleasedFromTheVoid), where the name for Iota Construct came from. If you want a different flavor of Iota Construct / Assassin that is more closer to how it was intended, check it out.
 
 ## Changelog
+- 1.2.0: added sots/ac stages to spawn, added ac enemies to custom families
+- 1.1.6: fixed for AC & enemiesreturns/starstorm compat
 - 1.1.5: fixed for sots 2.0 & sandswept compat
 - 1.1.4: fixed iota construct following you beyond the teleporter
 - 1.1.3: made to work in sots
